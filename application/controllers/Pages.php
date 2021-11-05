@@ -1,6 +1,6 @@
 <?php
     class Pages extends CI_Controller{
-
+        
         public function index() {
             $this->load->view('templates/header');
 		    $this->load->view('pages/home');
@@ -16,6 +16,18 @@
 
             $this->load->view('templates/header');
             $this->load->view('pages/'.$page, $data);
+            $this->load->view('templates/footer');
+        }
+
+        public function admin($page = 'dashboard'){
+            if (!file_exists(APPPATH.'views/pages/admin/'.$page.'.php')) {
+                show_404();
+            }
+
+            $data['title'] = ucfirst($page);
+
+            $this->load->view('templates/header');
+            $this->load->view('pages/admin/'.$page, $data);
             $this->load->view('templates/footer');
         }
     }

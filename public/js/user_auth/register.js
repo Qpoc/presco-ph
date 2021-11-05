@@ -21,7 +21,7 @@ $(document).ready(function () {
             "password" : password,
         }
         
-        prescoExecutePOST("api/Userauthcontroller/registerUser", payload, function (response) {
+        prescoExecutePOST("api/UserAuthController/registerUser", payload, function (response) {
             console.log(response);
         })
 
@@ -36,17 +36,17 @@ $(document).ready(function () {
             "password" : password
         }
 
-        prescoExecutePOST("api/Userauthcontroller/verifyLogin",payload, function (response) { 
+        prescoExecutePOST("api/UserAuthController/verifyLogin",payload, function (response) { 
             if (response.status == "Success") {
-                window.location.replace('/presco-ph/');
+                window.location.replace('/presco-ph');
             }
         });
 
     });
 
     $("#btnLogout").unbind("click").on("click", function (e) { 
-        prescoExecuteGET("api/Userauthcontroller/verifyLogout", function () { 
-            window.location.replace('/presco-ph/');
+        prescoExecuteGET("api/UserAuthController/verifyLogout", function () { 
+            window.location.replace('/presco-ph');
         });
     });
     

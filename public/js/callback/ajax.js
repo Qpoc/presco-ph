@@ -31,7 +31,7 @@ function prescoExecuteGET(url, payload, callback) {
 function prescoExecuteGET(url, callback) {
 	$.ajax({
 		type: "GET",
-		url: url,
+		url: "index.php/" + url,
 		success: function (data) {
 			console.log(data); // predefined logic if any
 
