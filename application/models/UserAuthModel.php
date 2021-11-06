@@ -40,7 +40,7 @@ class Userauthmodel extends CI_Model {
 
     public function verifyLogin($payload){
         if (isset($payload)) {
-            $result = $this->db->select("user_account.username, user_account.password, user_info.full_name")->from("user_account")->join("user_info", "user_account.username = user_info.username")->where("user_account.username", $payload->username)->where("user_account.password", hash("sha256", $payload->password))->get();
+            $result = $this->db->select("user_account.username, user_info.email, user_info.full_name")->from("user_account")->join("user_info", "user_account.username = user_info.username")->where("user_account.username", $payload->username)->where("user_account.password", hash("sha256", $payload->password))->get();
             
             $result = $result->result();
             $isLogin = false;
@@ -54,7 +54,7 @@ class Userauthmodel extends CI_Model {
 
                 $isLogin = true;
             }else{
-                $result = $this->db->select("user_info.email, user_account.password, user_info.full_name")->from("user_account")->join("user_info", "user_account.username = user_info.username")->where("user_info.email", $payload->username)->where("user_account.password", hash("sha256", $payload->password))->get();
+                $result = $this->db->select("user_info.email, user_info.full_name")->from("user_account")->join("user_info", "user_account.username = user_info.username")->where("user_info.email", $payload->username)->where("user_account.password", hash("sha256", $payload->password))->get();
                 $result = $result->result();
 
                 if (count($result)) {
@@ -65,12 +65,37 @@ class Userauthmodel extends CI_Model {
     
                     $isLogin = true;
                 }else {
-                    $response = array(
-                        "status" => "Failed",
-                        "message" => "Login Failed",
-                    );
-                }
 
+                    $result = $this->db->select("first_name, last_name, email, username")->from("admin_account")->where("email", $payload->username)->where("password", hash("sha256", $payload->password))->or_where("username", $payload->username)->where("password", hash("sha256", $payload->password))->get();
+
+                    $result = $result->result();
+
+                    if (count($result) > 0) {
+                        
+                        $response = array(
+                            "status" => "Success",
+                            "message" => "Login Successfully",
+                            "type" => "admin"
+                        );
+                        
+                        foreach ($result as $row) {
+                            $name = $row->first_name . " " . $row->last_name;
+                        }
+
+                        $_SESSION['user'] = $name;
+                        $_SESSION['session_id'] = hash("sha256",uniqid());
+
+                        return json_encode($response);
+                    }else {
+                        $response = array(
+                            "status" => "Failed",
+                            "message" => "Login Failed",
+                        );
+
+                        return json_encode($response);
+                    }
+
+                }
             }
 
             if ($isLogin) {

@@ -15,22 +15,14 @@
 	<body>
 		<nav class="navbar navbar-expand-lg shadow navbar-light bg-primary">
             <div class="container-fluid">
-                <form class="d-flex pt-3 w-100">
-                    <a class="navbar-brand text-primary fw-bold d-none d-md-block" href="<?php echo base_url();?>">PRES CO</a>
-                    <div class="input-group">
-                        <input class="form-control form-control-sm" type="search" placeholder="Search" aria-label="Search">
-                        <span class="input-group-text bg" id="basic-addon2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search text-primary" viewBox="0 0 16 16">
-                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                            </svg>
-                        </span>
-                    </div>
-                    <div class="basket-container">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-cart-fill text-primary mx-3" viewBox="0 0 16 16">
-                            <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                <div class="d-flex align-items-center pt-3 w-100">
+                    <a class="navbar-brand text-primary fw-bold" href="<?php echo base_url();?>">PRES CO ADMIN PANEL</a>
+                    <div class="notification-container">
+                        <svg xmlns="http://www.w3.org/2000/svg" style="cursor: pointer;" width="16" height="16" fill="currentColor" class="bi bi-bell-fill text-primary mx-3 rounded-3" viewBox="0 0 16 16">
+                            <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
                         </svg>
                     </div>
-                    <div class="d-flex">
+                    <div class="d-flex align-items-center justify-content-end w-100">
                         <ul>
                             <li class="nav-item dropdown mx-3">
                                 <div class="profile">
@@ -42,13 +34,11 @@
                                         <ul class="rounded-3">
                                             <?php
                                                 if (isset($_SESSION['session_id']) && isset($_SESSION['user'])) {
-                                                    echo '<li><a class="dropdown-item text-sm" href="#" disabled>'.$_SESSION['user'].'</a></li>
+                                                    echo '<li style="pointer-events: none;"><a class="dropdown-item text-sm" href="#" disabled>'.$_SESSION['user'].'</a></li>
                                                     <li><hr class="dropdown-divider"></li>
-                                                    <li><a class="dropdown-item text-sm" href="#">My Account</a></li>
-                                                    <li><a class="dropdown-item text-sm" href="#">My Orders</a></li>
-                                                    <li><a class="dropdown-item text-sm" href="#">My Wishlist</a></li>
-                                                    <li><a class="dropdown-item text-sm" href="#">My Cancellations</a></li>
-                                                    <li><button class="dropdown-item text-sm" id="btnLogout" user-type="employee">Logout</button></li>';
+                                                    <li><a class="dropdown-item text-sm" href="#">Profile</a></li>
+                                                    <li><a class="dropdown-item text-sm" href="#">Settings</a></li>
+                                                    <li><button class="dropdown-item text-sm" id="btnLogout" user-type="admin">Logout</button></li>';
                                                 }else {
                                                     echo '<li><a class="dropdown-item" href="'.base_url().'login" disabled>Login</a></li>
                                                     <li><a class="dropdown-item" href="'.base_url().'signup">Create an Account</a></li>';
@@ -60,7 +50,7 @@
                             </li>
                         </ul>
                     </div>
-                </form>
+                </div>
             </div>
         </nav>
 	</body>

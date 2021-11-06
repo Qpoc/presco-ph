@@ -38,7 +38,11 @@ $(document).ready(function () {
 
         prescoExecutePOST("api/UserAuthController/verifyLogin",payload, function (response) { 
             if (response.status == "Success") {
-                window.location.replace('/presco-ph');
+                if (response.type == "admin") {
+                    window.location.replace('/presco-ph/admin');
+                }else {
+                    window.location.replace('/presco-ph');
+                }
             }
         });
 
@@ -46,7 +50,11 @@ $(document).ready(function () {
 
     $("#btnLogout").unbind("click").on("click", function (e) { 
         prescoExecuteGET("api/UserAuthController/verifyLogout", function () { 
-            window.location.replace('/presco-ph');
+            if ($(e.target).attr("user-type") == 'admin') {
+                window.location.replace('/presco-ph/login');
+            }else{
+                window.location.replace('/presco-ph');
+            }
         });
     });
     

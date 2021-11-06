@@ -19,15 +19,21 @@
             $this->load->view('templates/footer');
         }
 
-        public function admin($page = 'dashboard'){
-            if (!file_exists(APPPATH.'views/pages/admin/'.$page.'.php')) {
+        public function indexAdmin(){
+            $this->load->view('templates/admin/header');
+            $this->load->view('pages/admin/dashboard');
+            $this->load->view('templates/footer');
+        }
+
+        public function viewAdmin($page = 'dashboard'){
+            if (!file_exists(APPPATH."views/pages/admin/" . $page . '.php')) {
                 show_404();
             }
 
             $data['title'] = ucfirst($page);
 
-            $this->load->view('templates/header');
-            $this->load->view('pages/admin/'.$page, $data);
-            $this->load->view('templates/footer');
+            $this->load->view("templates/admin/header");
+            $this->load->view("pages/admin/" . $page, $data);
+            $this->load->view("templates/footer");
         }
     }
