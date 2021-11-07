@@ -22,6 +22,14 @@ class Userauthmodel extends CI_Model {
     
             $this->db->insert('user_info', $userinfo);
 
+            $useraddress = array(
+                
+                'email' => $payload->email,
+                'address' => $payload->address                
+            );
+            
+            $this->db->insert('user_address', $useraddress);
+
             $response = array(
                 "status" => "Success",
                 "message" => "Account Created"
@@ -133,7 +141,6 @@ class Userauthmodel extends CI_Model {
             $this->db->where('username', $payload->username);
             $this->db->update('user_account'); 
 
-           
             $userInfo = array(
                 'full_name' => $payload->fullName,
                 'birthdate' => $payload->birthDate,
@@ -144,7 +151,17 @@ class Userauthmodel extends CI_Model {
             $this->db->set($userInfo);
             $this->db->where('email', $payload->email);
             $this->db->update('user_info'); 
-
+            
+            
+            $userAddress = array(
+                'email' => $payload->newEmail,
+                'address' => $payload->newAddress
+            );
+            
+            $this->db->set($userAddress);
+            $this->db->where('email', $payload->email);
+            $this->db->where('address',$payload->address);
+            $this->db->update('user_address'); 
 
             $response = array(
                 "status" => "Success",
