@@ -14,6 +14,12 @@ class UserAuthController extends CI_Controller {
         echo $this->UserAuthModel->verifyLogin($payload);
     }
 
+    public function updateUser(){
+        $payload = json_decode(file_get_contents('php://input'));
+        
+        echo $this->UserAuthModel->updateUser($payload);
+    }
+
     public function verifyLogout(){
         echo $this->UserAuthModel->verifyLogout();
     }

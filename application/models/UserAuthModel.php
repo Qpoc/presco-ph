@@ -119,6 +119,49 @@ class Userauthmodel extends CI_Model {
         }
     }
 
+    public function updateUser($payload){
+        if (isset($payload)) {
+           
+            
+            $userAccount = array(
+                'username' => $payload->newUsername,
+                'password' => hash("sha256", $payload->password)
+            );
+
+            
+            $this->db->set($userAccount);
+            $this->db->where('username', $payload->username);
+            $this->db->update('user_account'); 
+
+           
+            $userInfo = array(
+                'full_name' => $payload->fullName,
+                'birthdate' => $payload->birthDate,
+                'gender' => $payload->gender,
+                'email' => $payload->newEmail,
+            );
+           
+            $this->db->set($userInfo);
+            $this->db->where('email', $payload->email);
+            $this->db->update('user_info'); 
+
+
+            $response = array(
+                "status" => "Success",
+                "message" => "user info Updated"
+            );
+
+            return json_encode($response);
+        }else {
+            $response = array(
+                "status" => "Failed",
+                "message" => "Missing payload"
+            );
+
+            return json_encode($response);
+        }
+    }
+
     public function verifyLogout(){
         if (isset($_SESSION['session_id']) && isset($_SESSION['user'])) {
             session_destroy();
