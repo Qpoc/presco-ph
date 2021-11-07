@@ -22,6 +22,14 @@ class Userauthmodel extends CI_Model {
     
             $this->db->insert('user_info', $userinfo);
 
+            $useraddress = array(
+                
+                'email' => $payload->email,
+                'address' => $payload->address                
+            );
+            
+            $this->db->insert('user_address', $useraddress);
+
             $response = array(
                 "status" => "Success",
                 "message" => "Account Created"
@@ -107,6 +115,58 @@ class Userauthmodel extends CI_Model {
                 $_SESSION['user'] = $name;
                 $_SESSION['session_id'] = hash("sha256",uniqid());
             }
+
+            return json_encode($response);
+        }else {
+            $response = array(
+                "status" => "Failed",
+                "message" => "Missing payload"
+            );
+
+            return json_encode($response);
+        }
+    }
+
+    public function updateUser($payload){
+        if (isset($payload)) {
+           
+            
+            $userAccount = array(
+                'username' => $payload->newUsername,
+                'password' => hash("sha256", $payload->password)
+            );
+
+            
+            $this->db->set($userAccount);
+            $this->db->where('username', $payload->username);
+            $this->db->update('user_account'); 
+
+            $userInfo = array(
+                'full_name' => $payload->fullName,
+                'birthdate' => $payload->birthDate,
+                'gender' => $payload->gender,
+                'email' => $payload->newEmail,
+            );
+           
+            $this->db->set($userInfo);
+            $this->db->where('email', $payload->email);
+            $this->db->update('user_info'); 
+            
+            
+            $userAddress = array(
+                'email' => $payload->newEmail,
+                'address' => $payload->newAddress
+            );
+            
+            $this->db->set($userAddress);
+            $this->db->where('email', $payload->email);
+            $this->db->where('address',$payload->address);
+            $this->db->update('user_address'); 
+
+            $response = array(
+                "status" => "Success",
+                "message" => "user info Updated"
+            );
 
             return json_encode($response);
         }else {
