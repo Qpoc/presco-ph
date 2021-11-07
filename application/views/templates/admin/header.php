@@ -11,18 +11,26 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
         <script src="<?php echo base_url();?>public/js/callback/ajax.js"></script>
         <script src="<?php echo base_url();?>public/js/third_party/bootstrap-datepicker.min.js"></script>
+        <script src="https://cdn.ckeditor.com/4.16.1/standard/ckeditor.js"></script>
     </head>
 	<body>
-		<nav class="navbar navbar-expand-lg shadow navbar-light bg-primary">
-            <div class="container-fluid">
-                <div class="d-flex align-items-center pt-3 w-100">
-                    <a class="navbar-brand text-primary fw-bold" href="<?php echo base_url();?>admin">PRES CO ADMIN PANEL</a>
-                    <div class="notification-container">
-                        <svg xmlns="http://www.w3.org/2000/svg" style="cursor: pointer;" width="16" height="16" fill="currentColor" class="bi bi-bell-fill text-primary mx-3 rounded-3" viewBox="0 0 16 16">
-                            <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
-                        </svg>
+		<div class="row" id="admin-container">
+            <div class="col-lg-12 p-3 shadow-sm">
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex">
+                        <a class="navbar-brand text-primary fw-bold d-none d-md-block mx-3" href="<?php echo base_url();?>admin">PRES CO</a>
+                        <label for="presco-navigation">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-list text-primary mt-1" viewBox="0 0 16 16" style="cursor: pointer;">
+                                <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+                            </svg>
+                        </label>
                     </div>
-                    <div class="d-flex align-items-center justify-content-end w-100">
+                    <div class="d-flex align-items-center justify-content-end">
+                        <div class="notification">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-bell-fill text-primary" viewBox="0 0 16 16">
+                                <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
+                            </svg>
+                        </div>
                         <ul>
                             <li class="nav-item dropdown mx-3">
                                 <div class="profile">
@@ -34,7 +42,7 @@
                                         <ul class="rounded-3">
                                             <?php
                                                 if (isset($_SESSION['session_id']) && isset($_SESSION['user'])) {
-                                                    echo '<li style="pointer-events: none;"><a class="dropdown-item text-sm" href="#" disabled>'.$_SESSION['user'].'</a></li>
+                                                    echo '<li><a class="dropdown-item text-sm" href="#" disabled>'.$_SESSION['user'].'</a></li>
                                                     <li><hr class="dropdown-divider"></li>
                                                     <li><a class="dropdown-item text-sm" href="#">Profile</a></li>
                                                     <li><a class="dropdown-item text-sm" href="#">Settings</a></li>
@@ -52,6 +60,4 @@
                     </div>
                 </div>
             </div>
-        </nav>
-	</body>
-</html>
+
