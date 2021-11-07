@@ -16,7 +16,7 @@
 		<nav class="navbar navbar-expand-lg shadow navbar-light bg-primary">
             <div class="container-fluid">
                 <div class="d-flex align-items-center pt-3 w-100">
-                    <a class="navbar-brand text-primary fw-bold" href="<?php echo base_url();?>">PRES CO ADMIN PANEL</a>
+                    <a class="navbar-brand text-primary fw-bold" href="<?php echo base_url();?>admin">PRES CO ADMIN PANEL</a>
                     <div class="notification-container">
                         <svg xmlns="http://www.w3.org/2000/svg" style="cursor: pointer;" width="16" height="16" fill="currentColor" class="bi bi-bell-fill text-primary mx-3 rounded-3" viewBox="0 0 16 16">
                             <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
