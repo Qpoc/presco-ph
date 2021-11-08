@@ -38,6 +38,7 @@ $(document).ready(function () {
 
         prescoExecutePOST("api/UserAuthController/verifyLogin",payload, function (response) { 
             if (response.status == "Success") {
+                Cookies.set('email', username, { expires: 10 })
                 if (response.type == "admin") {
                     window.location.replace('/presco-ph/admin');
                 }else {
@@ -55,6 +56,7 @@ $(document).ready(function () {
             }else{
                 window.location.replace('/presco-ph');
             }
+            Cookies.remove('email');
         });
     });
     

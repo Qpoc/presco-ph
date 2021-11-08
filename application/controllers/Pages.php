@@ -36,4 +36,22 @@
             $this->load->view("pages/admin/" . $page, $data);
             $this->load->view("templates/footer");
         }
+
+        public function indexViewProfile(){
+            $this->load->view("templates/header");
+            $this->load->view("pages/buyer_profile/profile");
+            $this->load->view("templates/footer");
+        }
+
+        public function viewProfile($page = 'profile'){
+            if (!file_exists(APPPATH."views/pages/buyer_profile/" . $page . '.php')) {
+                show_404();
+            }
+
+            $data['title'] = ucfirst($page);
+
+            $this->load->view("templates/header");
+            $this->load->view("pages/buyer_profile/" . $page, $data);
+            $this->load->view("templates/footer");
+        }
     }

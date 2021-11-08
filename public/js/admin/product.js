@@ -1,19 +1,18 @@
 $(document).ready(function () { 
     $("#btnAddProduct").unbind("click").on("click", function (e) { 
 
-        const formData = new FormData();
+        var formData = new FormData();
+    
+        formData.append("productName", $("#productName").val());
+        formData.append("imagePath", $("#productImage")[0].files[0]);
+        formData.append("price", $("#productPrice").val());
+        formData.append("stocks", $("#productStock").val());
+        formData.append("description", CKEDITOR.instances['productDescription'].getData());
+        formData.append("email", Cookies.get("email"));
 
-        formData.append("imagePath", document.getElementById("productImage").files[0]);
-
-        const payload = {
-            "productName" : $("#productName").val(),
-            "imagePath" : formData,
-            "price" : $("#productDescription").val(),
-            "stocks" : $("#productPrice").val(),
-            "description" : $("#productStock").val(),
-            "email" : $("#productName").val()
-        }
-
-        console.log(payload);
+        prescoExecuteFileUpload("api/ProductController/addProduct", formData, function (response) { 
+        
+        });
     });
+
 });

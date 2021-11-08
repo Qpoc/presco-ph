@@ -2,33 +2,80 @@
 
 class ProductModel extends CI_Model{
     
-    public function addProduct($payload){
-        if (isset($payload)) {
-            $product = array(
-                "product_name" => $payload->productName,
-                "image" => $payload->imagePath,
-                "price" => $payload->price,
-                "stocks" => $payload->stocks,
-                "description" => $payload->description,
-                "email" => $payload->email
-            );
+    public function addProduct($payload, $payload_post){
 
-            $this->db->insert("product", $product);
+        if (isset($payload['imagePath'])) {
+            $img_name = $payload['imagePath']['name'];
+            $extension = explode('.', $img_name);
+            $act_extension = strtolower(end($extension));
+            $allowed_ext = array("jpeg", "jpg", "png");
+            $tmp_name = $payload['imagePath']['tmp_name'];
+            $error = $payload['imagePath']['error'];
+            $size = $payload['imagePath']['size'];
 
+            if (isset($payload) AND $error == 0 AND in_array($act_extension, $allowed_ext) AND $size <= 2000000) {
+
+                $image_name_new = uniqid('') . '.' . $act_extension;
+                $db_img_path = "uploads/products/" . $image_name_new;
+
+                $config['upload_path'] = 'uploads/products/';
+                $config['file_name'] = $image_name_new;
+                $config['allowed_types'] = 'jpeg|jpg|png';
+                $config['max_size'] = 2000000;
+
+                $this->load->library('upload', $config);
+
+                if(!$this->upload->do_upload('imagePath')){
+                    echo($this->upload->display_errors());//validation error will be printed
+                }
+
+                $product = array(
+                    "product_name" => $payload_post['productName'],
+                    "image" => $db_img_path,
+                    "price" => $payload_post['price'],
+                    "stocks" => $payload_post['stocks'],
+                    "description" => $payload_post['description'],
+                    "email" => $payload_post['email']
+                );
+    
+                $this->db->insert("product", $product);
+    
+                $response = array(
+                    "status" => "Success",
+                    "message" => "Product Created"
+                );
+    
+                return json_encode($response);
+            }else {
+                $response = array(
+                    "status" => "Failed",
+                    "message" => "Missing payload"
+                );
+    
+                return json_encode($response);
+            }
+        }
+    }
+
+    public function getProduct(){
+        $result = $this->db->select("*")->from("product")->get();
+        
+        if ($result->num_rows() > 0) {
             $response = array(
                 "status" => "Success",
-                "message" => "Product Created"
-            );
-
-            return json_encode($response);
-        }else {
-            $response = array(
-                "status" => "Failed",
-                "message" => "Missing payload"
+                "message" => "Fetch Success",
+                "response" => $result->result()
             );
 
             return json_encode($response);
         }
+
+        $response = array(
+            "status" => "Failed",
+            "message" => "Fetch Failed"
+        );
+
+        return json_encode($response);
     }
 
     public function addToCart($payload){

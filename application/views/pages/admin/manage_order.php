@@ -1,24 +1,43 @@
-        <?php require("navigation.php") ?>
+<?php require("navigation.php") ?>
         <div class="col-lg-10 main-content">
             <div class="row gy-3 p-3">
                 <div class="col-lg-12">
-                    <h3 class="text-primary fw-bold">Product</h3>
+                    <h3 class="text-primary fw-bold">Order</h3>
                     <hr>
                 </div>
-                <div class="col-lg-12">
-                    <div class="d-flex justify-content-end button-product">
-                        <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#M_addCategory" >Add Product</button>
+                <div class="col-lg-12 d-flex justify-content-end">
+                    <button class="btn btn-sm btn-primary">Add Order</button>
+                </div>
+                <div class="col-lg-12 shadow p-3">
+                    <div class="row gy-3">
+                        <div class="col-lg-3">
+                            <input type="text" class="form-control form-control-sm" placeholder="Order No.">
+                        </div>
+                        <div class="col-lg-3">
+                            <input type="text" class="form-control form-control-sm" placeholder="Customer First Name">
+                        </div>
+                        <div class="col-lg-3">
+                            <input type="text" class="form-control form-control-sm" placeholder="Customer Last Name">
+                        </div>
+                        <div class="col-lg-3">
+                            <select name="" id="" class="form-select form-select-sm">
+                                <option value="" disabled selected>Status</option>
+                                <option value="" >Shipped</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-12 d-flex justify-content-end">
+                            <button class="btn btn-sm btn-primary">Search</button>
+                        </div>
                     </div>
                 </div>
                 <div class="col-lg-12 shadow p-3">
                     <table class="table table-responsive text-center">
                         <thead class="text-secondary">
                             <tr>
-                                <th>Product Name</th>
-                                <th>Price</th>
-                                <th>Stocks</th>
-                                <th>Description</th>
-                                <th>Created Date</th>
+                                <th>Customer Name</th>
+                                <th>Address</th>
+                                <th>Email Address</th>
+                                <th>Date Registered</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -72,4 +91,3 @@
         </div>
     </div>
 </div>
-<script src="<?php echo base_url();?>public/js/admin/product.js"></script>

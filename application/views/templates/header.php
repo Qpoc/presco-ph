@@ -9,8 +9,10 @@
         <link rel="stylesheet" href="<?php echo base_url();?>public/css/third_party/bootstrap-datepicker3.css.map">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous" ></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        <script src="<?php echo base_url();?>public/js/third_party/js.cookie.min.js"></script>
         <script src="<?php echo base_url();?>public/js/callback/ajax.js"></script>
         <script src="<?php echo base_url();?>public/js/third_party/bootstrap-datepicker.min.js"></script>
+        <script>var base_url = '<?php echo base_url() ?>';</script>
     </head>
 	<body>
 		<nav class="navbar navbar-expand-lg shadow navbar-light bg-primary">
@@ -30,12 +32,11 @@
                             <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
                         </svg>
                     </div>
-                    <div class="d-flex align-items-center">
+                    <div class="d-none d-lg-flex align-items-center">
                         <ul class="d-flex">
                             <li class="mx-3"><a href="<?php echo base_url();?>" class="text-primary">HOME</a></li>
-                            <li class="mx-3"><a href="" class="text-primary">SHOP</a></li>
-                            <li class="mx-3"><a href="" class="text-primary">FAQ</a></li>
-                            <li class="mx-3"><a href="" class="text-primary">CONTACT</a></li>
+                            <li class="mx-3"><a href="<?php echo base_url();?>shop" class="text-primary">SHOP</a></li>
+                            <li class="mx-3"><a href="<?php echo base_url();?>faq" class="text-primary">FAQ</a></li>
                         </ul>
                     </div>
                     <div class="d-flex">
@@ -52,10 +53,11 @@
                                                 if (isset($_SESSION['session_id']) && isset($_SESSION['user'])) {
                                                     echo '<li><a class="dropdown-item text-sm" href="#" disabled>'.$_SESSION['user'].'</a></li>
                                                     <li><hr class="dropdown-divider"></li>
-                                                    <li><a class="dropdown-item text-sm" href="#">My Account</a></li>
-                                                    <li><a class="dropdown-item text-sm" href="#">My Orders</a></li>
-                                                    <li><a class="dropdown-item text-sm" href="#">My Wishlist</a></li>
-                                                    <li><a class="dropdown-item text-sm" href="#">My Cancellations</a></li>
+                                                    <li><a class="dropdown-item text-sm" href="'.base_url().'account">My Account</a></li>
+                                                    <li><a class="dropdown-item text-sm" href="'.base_url().'account/order">My Orders</a></li>
+                                                    <li><a class="dropdown-item text-sm" href="'.base_url().'account/reviews">My Review</a></li>
+                                                    <li><a class="dropdown-item text-sm" href="'.base_url().'account/wishlist">My Wishlist</a></li>
+                                                    <li><a class="dropdown-item text-sm" href="'.base_url().'account/cancellation">My Cancellations</a></li>
                                                     <li><button class="dropdown-item text-sm" id="btnLogout" user-type="employee">Logout</button></li>';
                                                 }else {
                                                     echo '<li><a class="dropdown-item" href="'.base_url().'login" disabled>Login</a></li>
@@ -71,5 +73,4 @@
                 </form>
             </div>
         </nav>
-	</body>
-</html>
+   

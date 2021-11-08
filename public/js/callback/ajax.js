@@ -2,7 +2,7 @@ function prescoExecutePOST(url, payload, callback) {
 	$.ajax({
 		type: "POST",
 		data: JSON.stringify(payload),
-		url: 'http://localhost/presco-ph/' + url,
+		url: base_url + url,
 		dataType: "json",
 		success: function (data) {
 			if (typeof callback == "function") {
@@ -15,10 +15,12 @@ function prescoExecutePOST(url, payload, callback) {
 function prescoExecuteFileUpload(url, payload, callback) {
 	$.ajax({
 		type: "POST",
-		data: JSON.stringify(payload),
-		url: 'http://localhost/presco-ph/' + url,
-		ContentType: "multipart/form-data",
+		data: payload,
+		url: base_url + url,
 		dataType: "json",
+		cache: false,
+		processData: false,
+		contentType: false,
 		success: function (data) {
 			if (typeof callback == "function") {
 				callback(data);
@@ -30,11 +32,10 @@ function prescoExecuteFileUpload(url, payload, callback) {
 function prescoExecuteGET(url, payload, callback) {
 	$.ajax({
 		type: "GET",
-		url: 'http://localhost/presco-ph/' + url,
+		url: base_url + url,
 		dataType: "json",
 		data: JSON.stringify(payload),
 		success: function (data) {
-			console.log(data); // predefined logic if any
 
 			if (typeof callback == "function") {
 				callback(data);
@@ -46,10 +47,9 @@ function prescoExecuteGET(url, payload, callback) {
 function prescoExecuteGET(url, callback) {
 	$.ajax({
 		type: "GET",
-		url: 'http://localhost/presco-ph/' + url,
+		url: base_url + url,
 		success: function (data) {
-			console.log(data); // predefined logic if any
-
+			
 			if (typeof callback == "function") {
 				callback(data);
 			}

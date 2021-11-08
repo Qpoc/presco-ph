@@ -8,7 +8,7 @@
         </div>
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img src="https://pixabay.com/get/g029e8c63b83d7def2aa95288f339e734da3181edb8ec7e021582626772318e5bcd327dcaccefc9e02c1f96e8f2e5a513.jpg?attachment=" class="d-block w-100" alt="...">
+                <img src="https://wallpaperaccess.com/download/4k-minimalist-21635" class="d-block w-100" alt="...">
                 <div class="carousel-caption d-none d-md-block">
                     <h5>Relaxing scents perfect for your home.</h5>
                     <button class="btn btn-sm btn-primary" id="btnShopNow">SHOP NOW</button>
@@ -39,42 +39,10 @@
         </button>
     </div>
 </div>
-<div class="col-lg-12 p-3 mt-3">
-    <div class="d-flex">
-        <div class="card mx-3 shadow-lg">
-            <img src="https://image.freepik.com/free-psd/clear-glass-votive-candle-mockup_358694-903.jpg" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Silang</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            </div>
-            <div class="card-body">
-                <button class="btn btn-sm btn-primary">Buy Now</button>
-                <button class="btn btn-sm btn-primary">Add to Cart</button>
-            </div>
-        </div>
-        <div class="card mx-3 shadow-lg">
-            <img src="https://image.freepik.com/free-psd/two-candles-mockup_58466-16817.jpg" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Sweet Pea</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            </div>
-            <div class="card-body">
-                <button class="btn btn-sm btn-primary">Buy Now</button>
-                <button class="btn btn-sm btn-primary">Add to Cart</button>
-            </div>
-        </div>
-        <div class="card mx-3 shadow-lg">
-            <img src="https://image.freepik.com/free-psd/candle-package-mockup_58466-16824.jpg" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">English Pear and Freesia</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            </div>
-            <div class="card-body">
-                <button class="btn btn-sm btn-primary">Buy Now</button>
-                <button class="btn btn-sm btn-primary">Add to Cart</button>
-            </div>
-        </div>
+<div class="col-lg-12 p-3">
+    <div class="row gy-3" id="card-section">
+        
     </div>
 </div>
-
+<script src="<?php echo base_url();?>public/js/buyer/product.js"></script> 
 <script src="<?php echo base_url();?>public/js/user_auth/register.js"></script> 
