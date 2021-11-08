@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 07, 2021 at 01:42 PM
+-- Generation Time: Nov 08, 2021 at 02:33 PM
 -- Server version: 10.4.19-MariaDB
 -- PHP Version: 8.0.6
 
@@ -113,6 +113,19 @@ CREATE TABLE `product` (
 INSERT INTO `product` (`product_id`, `product_name`, `image`, `price`, `stocks`, `description`, `email`, `created_date`, `modified_date`) VALUES
 (2, 'Candle baho', 'images/product/hello.png', 999, 80, 'This is good Candle', 'superadmin@gmail.com', '2021-11-05 21:02:37', '2021-11-15 19:08:25 '),
 (3, 'Candle Scent', 'images/product/hello.png', 105.99, 80, 'This is good Candle', 'superadmin@gmail.com', '2021-11-07 15:09:07', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `rate`
+--
+
+CREATE TABLE `rate` (
+  `email` varchar(200) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `rate` int(11) NOT NULL,
+  `created_date` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -294,6 +307,13 @@ ALTER TABLE `product`
   ADD KEY `email` (`email`);
 
 --
+-- Indexes for table `rate`
+--
+ALTER TABLE `rate`
+  ADD PRIMARY KEY (`product_id`),
+  ADD KEY `email` (`email`);
+
+--
 -- Indexes for table `reply`
 --
 ALTER TABLE `reply`
@@ -399,6 +419,13 @@ ALTER TABLE `feedback`
 --
 ALTER TABLE `product`
   ADD CONSTRAINT `product_ibfk_1` FOREIGN KEY (`email`) REFERENCES `admin_account` (`email`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `rate`
+--
+ALTER TABLE `rate`
+  ADD CONSTRAINT `rate_ibfk_1` FOREIGN KEY (`email`) REFERENCES `user_info` (`email`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `rate_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `reply`
