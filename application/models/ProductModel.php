@@ -35,7 +35,9 @@ class ProductModel extends CI_Model{
                     "price" => $payload_post['price'],
                     "stocks" => $payload_post['stocks'],
                     "description" => $payload_post['description'],
-                    "email" => $payload_post['email']
+                    "email" => $payload_post['email'],
+                    "category" =>$payload_post['category'],
+                    "featured" =>$payload_post['featured']
                 );
     
                 $this->db->insert("product", $product);
@@ -84,8 +86,7 @@ class ProductModel extends CI_Model{
                 "email" => $payload->email,
                 "product_id" => $payload->productId,
                 "quantity" => $payload->quantity,
-                "price" => $payload->price,
-                "total_price" => $payload->totalPrice
+                "price" => $payload->price
             );
 
             $this->db->insert('cart', $product);
@@ -118,7 +119,9 @@ class ProductModel extends CI_Model{
                 "stocks" => $payload->stocks,
                 "description" => $payload->description,
                 "email" => $payload->email,
-                "modified_date" => $payload->modifiedDate
+                "modified_date" => $payload->modifiedDate,
+                "category" => $payload-> category,
+                "featured" => $payload-> featured
             );
 
             $this->db->set($product);
