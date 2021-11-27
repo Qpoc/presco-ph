@@ -81,6 +81,7 @@ class ProductModel extends CI_Model{
     }
 
     public function addToCart($payload){
+
         if (isset($payload)){
             $product= array(
                 "email" => $payload->email,
@@ -88,12 +89,33 @@ class ProductModel extends CI_Model{
                 "quantity" => $payload->quantity,
                 "price" => $payload->price
             );
+            $query = $this->db->query("select product_id, quantity from cart where product_id = $payload->productId");
+            if($query->num_rows() > 0 && isset($payload->deleteItem)){
+                $this->db->where('product_id', $payload->productId);
+                $this->db->delete('cart');
+            }
+            elseif($query->num_rows() > 0 && !isset($payload->deleteItem)){
 
-            $this->db->insert('cart', $product);
-
+                if($query->num_rows() > 0 && !isset($payload->decreaseQuantity)){
+                    $this->db
+                        ->set('quantity', 'quantity+1', FALSE)
+                        ->where('product_id', $payload->productId)
+                        ->update('cart');
+                }
+                elseif($query->num_rows() > 0 && isset($payload->decreaseQuantity)){
+                    $this->db
+                        ->set('quantity', 'quantity-1', FALSE)
+                        ->where('product_id', $payload->productId)
+                        ->update('cart');
+                }
+                
+            }
+            else{
+                $this->db->insert('cart', $product);
+                }
             $response = array(
                 "status" => "Success",
-                "message" => "Product Created"
+                "message" => "cart updated"
             );
 
             return json_encode($response);
@@ -108,6 +130,30 @@ class ProductModel extends CI_Model{
         }
 
     
+    }
+
+    public function getCart(){
+        if (isset($payload)) {
+            $result = $this->db->select("*")->where('email',$payload->email)->from("cart")->get();
+            
+            if ($result->num_rows() > 0) {
+                $response = array(
+                    "status" => "Success",
+                    "message" => "Fetch Success",
+                    "response" => $result->result()
+                );
+
+                return json_encode($response);
+            }
+        }
+        else{
+            $response = array(
+                "status" => "Failed",
+                "message" => "Fetch Failed"
+            );
+            return json_encode($response);
+        }
+        
     }
 
     public function updateProduct($payload){

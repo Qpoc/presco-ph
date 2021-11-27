@@ -18,6 +18,7 @@ class Userauthmodel extends CI_Model {
                 'gender' => $payload->gender,
                 'email' => $payload->email,
                 'username' => $payload->username,
+                'contact_number'=>$payload->contactNumber
             );
     
             $this->db->insert('user_info', $userinfo);
@@ -146,6 +147,7 @@ class Userauthmodel extends CI_Model {
                 'birthdate' => $payload->birthDate,
                 'gender' => $payload->gender,
                 'email' => $payload->newEmail,
+                'contact_number' => $payload->newContact
             );
            
             $this->db->set($userInfo);
