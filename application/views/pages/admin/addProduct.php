@@ -61,6 +61,20 @@
                             <p>Product Stocks:</p>
                             <input id="productStock" type="text" class="form-control form-control-sm" placeholder="Product Stocks">
                         </div>
+                        <div class="col-lg-6">
+                            <p>Category:</p>
+                            <select name="category" id="category" class="form-select form-select-sm">
+                                <option value="" disabled selected>Select category</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-6">
+                            <p>Featured:</p>
+                            <select name="featured" id="featured" class="form-select form-select-sm">
+                                <option value="" disabled selected>Select featured</option>
+                                <option value="true">Yes</option>
+                                <option value="false">No</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">

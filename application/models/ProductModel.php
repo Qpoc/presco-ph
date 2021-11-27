@@ -132,9 +132,9 @@ class ProductModel extends CI_Model{
     
     }
 
-    public function getCart(){
+    public function getCart($payload){
         if (isset($payload)) {
-            $result = $this->db->select("*")->where('email',$payload->email)->from("cart")->get();
+            $result = $this->db->select("*")->from("cart")->where('email',$payload->email)->get();
             
             if ($result->num_rows() > 0) {
                 $response = array(
@@ -145,8 +145,7 @@ class ProductModel extends CI_Model{
 
                 return json_encode($response);
             }
-        }
-        else{
+        }else{
             $response = array(
                 "status" => "Failed",
                 "message" => "Fetch Failed"

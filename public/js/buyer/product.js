@@ -20,18 +20,33 @@ $(document).ready(function () {
                             <div class="product-description text-secondary">
                                 <p class="card-text">${product.description}</p>
                             </div>
-                            <p class="text-secondary">&#8369; ${product.price}</p>
+                            <p class="text-secondary">&#8369; <span class="product-price">${product.price}</span></p>
                         </div>
                         <div class="card-body d-flex justify-content-center">
-                            <button class="btn btn-sm btn-primary mx-3">Buy Now</button>
-                            <button class="btn btn-sm btn-primary mx-3">Add to Cart</button>
+                            <button class="btn btn-sm btn-primary mx-3 btnBuyNow">Buy Now</button>
+                            <button class="btn btn-sm btn-primary mx-3 btnAddToCart">Add to Cart</button>
                         </div>
                     </div>
                 </div>
             `); 
         });
         
-        console.log(data.response);
+        $(".btnAddToCart").unbind("click").on("click", function (e) { 
+            const btnAddToCart = $(e.target);
+            const productContainer = btnAddToCart.closest(".product-container-home");
+            const productID = btnAddToCart.closest(".product-container-home").attr("product-id");
+
+            const payload = {
+                "email" : Cookies.get("email"),
+                "productId" : productID,
+                "quantity" : "1",
+                "price": productContainer.find(".product-price").text()
+            }
+
+            prescoExecutePOST("api/ProductController/addToCart", payload, function (res) {
+                console.log(res);
+            });
+        });
         
 	});
 });

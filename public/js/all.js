@@ -15,4 +15,14 @@ $(document).ready(function () {
        }
     })
 
+    const cart = {
+        "email" : Cookies.get('email') ? Cookies.get('email') : null
+    }
+
+    prescoExecutePOST("api/ProductController/getCart", cart, function (res) { 
+        if (res.status == "Success") {
+            $("#cartNumber").text(res.response.length)
+        }
+    });
+
 });
