@@ -111,7 +111,7 @@ class Userauthmodel extends CI_Model {
             if ($isLogin) {
 
                 foreach ($result as $row) {
-                    $name = $row->full_name;
+                    $name = $row->first_name . " " . $row->last_name;
                 }
                 
                 $_SESSION['user'] = $name;
