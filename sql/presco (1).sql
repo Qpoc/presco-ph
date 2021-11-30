@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.1.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 30, 2021 at 04:44 PM
--- Server version: 10.4.18-MariaDB
--- PHP Version: 7.4.25
+-- Generation Time: Nov 30, 2021 at 07:18 PM
+-- Server version: 10.4.19-MariaDB
+-- PHP Version: 8.0.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -227,7 +227,8 @@ INSERT INTO `user_address` (`email`, `address`, `created_date`) VALUES
 --
 
 CREATE TABLE `user_info` (
-  `full_name` varchar(200) NOT NULL,
+  `first_name` varchar(200) NOT NULL,
+  `last_name` varchar(200) NOT NULL,
   `birthdate` date NOT NULL,
   `gender` varchar(11) NOT NULL,
   `email` varchar(200) NOT NULL,
@@ -238,9 +239,9 @@ CREATE TABLE `user_info` (
 -- Dumping data for table `user_info`
 --
 
-INSERT INTO `user_info` (`full_name`, `birthdate`, `gender`, `email`, `username`) VALUES
-('John Cyrus Combate Patungan', '1999-07-21', 'male', 'cypatungan@gmail.com', 'kupoc'),
-('jake howell', '1999-11-15', 'male', 'jack22@yahoo.com', 'magressMatulog');
+INSERT INTO `user_info` (`first_name`, `last_name`, `birthdate`, `gender`, `email`, `username`) VALUES
+('John Cyrus', 'Patungan', '1999-07-21', 'male', 'cypatungan@gmail.com', 'kupoc'),
+('Jake Howell', 'Lubrica', '1999-11-15', 'male', 'jack22@yahoo.com', 'magressMatulog');
 
 -- --------------------------------------------------------
 
