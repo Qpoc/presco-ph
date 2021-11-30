@@ -50,7 +50,8 @@ $(document).ready(function () {
     });
 
     $("#btnLogout").unbind("click").on("click", function (e) { 
-        prescoExecuteGET("api/UserAuthController/verifyLogout", function () { 
+        prescoExecuteGET("api/UserAuthController/verifyLogout", function (res) { 
+            console.log(res);
             if ($(e.target).attr("user-type") == 'admin') {
                 window.location.replace('/presco-ph/login');
             }else{

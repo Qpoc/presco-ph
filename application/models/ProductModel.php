@@ -36,7 +36,8 @@ class ProductModel extends CI_Model{
                     "stocks" => $payload_post['stocks'],
                     "description" => $payload_post['description'],
                     "email" => $payload_post['email'],
-                    "category" =>$payload_post['category'],
+                    "category_type" =>$payload_post['category_type'],
+                    "category_name" =>$payload_post['category_name'],
                     "featured" =>$payload_post['featured']
                 );
     
@@ -59,8 +60,13 @@ class ProductModel extends CI_Model{
         }
     }
 
-    public function getProduct(){
-        $result = $this->db->select("*")->from("product")->get();
+    public function getProduct($payload){
+        if (isset($payload)) {
+            $result = $this->db->select("*")->from("product")->where("featured", $payload->featured)->get();
+        }else{
+            $result = $this->db->select("*")->from("product")->get();
+        }
+        
         
         if ($result->num_rows() > 0) {
             $response = array(
@@ -134,7 +140,7 @@ class ProductModel extends CI_Model{
 
     public function getCart($payload){
         if (isset($payload)) {
-            $result = $this->db->select("*")->from("cart")->where('email',$payload->email)->get();
+            $result = $this->db->select("cart.product_id, cart.quantity, cart.price, cart.created_date, product.product_name, product.image, product.price, product.stocks")->from("cart")->join("product", "cart.product_id = product.product_id")->where('cart.email',$payload->email)->order_by("cart.created_date", "DESC")->get();
             
             if ($result->num_rows() > 0) {
                 $response = array(
@@ -142,9 +148,14 @@ class ProductModel extends CI_Model{
                     "message" => "Fetch Success",
                     "response" => $result->result()
                 );
-
-                return json_encode($response);
+            }else {
+                $response = array(
+                    "status" => "Failed",
+                    "message" => "No Data",
+                    "response" => $result->result()
+                );
             }
+            return json_encode($response);
         }else{
             $response = array(
                 "status" => "Failed",

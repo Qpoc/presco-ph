@@ -26,6 +26,9 @@
         </div>
     </div>
 </div>
+<div id="toastAddToCart" class="position-fixed bottom-0 end-0 top-0 p-3">
+
+</div>
 <script src="<?php echo base_url();?>public/js/user_auth/register.js"></script>
 <script src="<?php echo base_url();?>public/js/all.js"></script>
 </body>

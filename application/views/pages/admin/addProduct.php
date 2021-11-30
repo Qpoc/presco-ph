@@ -7,7 +7,7 @@
                 </div>
                 <div class="col-lg-12">
                     <div class="d-flex justify-content-end button-product">
-                        <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#M_addCategory" >Add Product</button>
+                        <button id="btnMAddProduct" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#M_addCategory" >Add Product</button>
                     </div>
                 </div>
                 <div class="col-lg-12 shadow p-3">
@@ -62,17 +62,23 @@
                             <input id="productStock" type="text" class="form-control form-control-sm" placeholder="Product Stocks">
                         </div>
                         <div class="col-lg-6">
+                            <p>Type:</p>
+                            <select name="categoryType" id="categoryType" class="form-select form-select-sm">
+                                
+                            </select>
+                        </div>
+                        <div class="col-lg-6">
                             <p>Category:</p>
                             <select name="category" id="category" class="form-select form-select-sm">
-                                <option value="" disabled selected>Select category</option>
+                                
                             </select>
                         </div>
                         <div class="col-lg-6">
                             <p>Featured:</p>
                             <select name="featured" id="featured" class="form-select form-select-sm">
-                                <option value="" disabled selected>Select featured</option>
-                                <option value="true">Yes</option>
-                                <option value="false">No</option>
+                                <option value="" disabled selected>Select Featured</option>
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
                             </select>
                         </div>
                     </div>

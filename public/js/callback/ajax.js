@@ -29,25 +29,11 @@ function prescoExecuteFileUpload(url, payload, callback) {
 	});
 }
 
-function prescoExecuteGET(url, payload, callback) {
-	$.ajax({
-		type: "GET",
-		url: base_url + url,
-		dataType: "json",
-		data: JSON.stringify(payload),
-		success: function (data) {
-
-			if (typeof callback == "function") {
-				callback(data);
-			}
-		},
-	});
-}
-
 function prescoExecuteGET(url, callback) {
 	$.ajax({
 		type: "GET",
 		url: base_url + url,
+		dataType: "json",
 		success: function (data) {
 			
 			if (typeof callback == "function") {

@@ -184,6 +184,12 @@ class Userauthmodel extends CI_Model {
     public function verifyLogout(){
         if (isset($_SESSION['session_id']) && isset($_SESSION['user'])) {
             session_destroy();
+            $response = array(
+                "status" => "Success",
+                "message" => "Log out successfully"
+            );
+
+            return json_encode($response);
         }
     }
 }

@@ -9,7 +9,8 @@ class ProductController extends CI_Controller  {
     }
 
     public function getProduct(){
-        echo $this->ProductModel->getProduct();
+        $payload = json_decode(file_get_contents("php://input"));
+        echo $this->ProductModel->getProduct($payload);
     }
 
     public function addToCart(){
