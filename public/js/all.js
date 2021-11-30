@@ -35,7 +35,7 @@ $(document).ready(function () {
                 $("#cartItems").append(`<div id="cartItem" class="cart-item-body d-flex flex-column">          
                 </div>`);
                 res.response.forEach(item => {
-                    $("#cartItem").append(`<div class="cart-item my-1 d-flex align-items-center" productID="${item.product_id}">
+                    $("#cartItem").append(`<div class="cart-item my-1 d-flex align-items-center" product-id="${item.product_id}">
                         <div class="cart-item-img">
                             <img src="${item.image}" alt="">
                         </div>
@@ -44,6 +44,7 @@ $(document).ready(function () {
                                 <p class="d-block text-truncate text-primary m-0" style="max-width: 175px;">${item.product_name}</p>
                                 <div class="d-flex align-items-center cart-action">
                                     <p class="text-secondary m-0">&#8369; <span class="cart-item-price">${item.price}</span></p>
+                                    <input type="hidden" value="${item.quantity}"/>
                                     <input type="number" class="form-control form-control-sm ms-1 inCartNumber" value="${item.quantity}" min="1" max="100" step="1" pattern="\d*" oninput="this.value= ['','-'].includes(this.value) ? this.value : this.value|0">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill text-danger mx-1" viewBox="0 0 16 16">
                                         <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
@@ -57,6 +58,38 @@ $(document).ready(function () {
                 <div class="cart-item-button my-1 d-flex justify-content-end">
                     <button class="btn btn-sm btn-primary ms-auto">View My Shopping Cart</button>
                 </div>`)
+                $(".inCartNumber").unbind("change keyup").on("change keyup", function(e){
+                    const inCartNumber = $(e.target);
+    
+                    if (inCartNumber.val() > inCartNumber.prev().val()) {
+                        const productContainer = inCartNumber.closest(".cart-item");
+                        const productID = inCartNumber.closest(".cart-item").attr("product-id");
+                        const payload = {
+                            "email" : Cookies.get("email"),
+                            "productId" : productID,
+                            "quantity" : inCartNumber.val(),
+                            "price": productContainer.find(".cart-item-price").text(),
+                        }
+
+                        prescoExecutePOST("api/ProductController/addToCart", payload, function (res) {});
+
+                        inCartNumber.prev().val(inCartNumber.val());
+                    }else if (inCartNumber.val() < inCartNumber.prev().val()) {
+                        const productContainer = inCartNumber.closest(".cart-item");
+                        const productID = inCartNumber.closest(".cart-item").attr("product-id");
+                        const payload = {
+                            "email" : Cookies.get("email"),
+                            "productId" : productID,
+                            "quantity" : inCartNumber.val(),
+                            "price": productContainer.find(".cart-item-price").text(),
+                            "decreaseQuantity" : true
+                        }
+
+                        prescoExecutePOST("api/ProductController/addToCart", payload, function (res) {});
+
+                        inCartNumber.prev().val(inCartNumber.val());
+                    }
+                });
             }else {
                 $("#cartItems").html("");
                 $("#cartItems").append(`<div class="cart-item-header">

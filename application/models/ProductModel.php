@@ -89,36 +89,31 @@ class ProductModel extends CI_Model{
     public function addToCart($payload){
 
         if (isset($payload)){
-            $product= array(
+
+            $product = array(
                 "email" => $payload->email,
                 "product_id" => $payload->productId,
                 "quantity" => $payload->quantity,
                 "price" => $payload->price
             );
-            $query = $this->db->query("select product_id, quantity from cart where product_id = $payload->productId");
-            if($query->num_rows() > 0 && isset($payload->deleteItem)){
-                $this->db->where('product_id', $payload->productId);
-                $this->db->delete('cart');
-            }
-            elseif($query->num_rows() > 0 && !isset($payload->deleteItem)){
 
+            $query = $this->db->query("SELECT product_id, quantity FROM cart WHERE product_id = $payload->productId AND email = '$payload->email'");
+
+            if($query->num_rows() > 0 && isset($payload->deleteItem)){
+                $this->db->where('product_id', $payload->productId)->where('email', $payload->email);
+                $this->db->delete('cart');
+            }else if($query->num_rows() > 0 && !isset($payload->deleteItem)){
                 if($query->num_rows() > 0 && !isset($payload->decreaseQuantity)){
-                    $this->db
-                        ->set('quantity', 'quantity+1', FALSE)
-                        ->where('product_id', $payload->productId)
-                        ->update('cart');
+                    $this->db->set('quantity', $payload->quantity, FALSE)->where('product_id', $payload->productId)->where('email', $payload->email)->update('cart');
                 }
                 elseif($query->num_rows() > 0 && isset($payload->decreaseQuantity)){
-                    $this->db
-                        ->set('quantity', 'quantity-1', FALSE)
-                        ->where('product_id', $payload->productId)
-                        ->update('cart');
+                    $this->db->set('quantity', $payload->quantity, FALSE)->where('product_id', $payload->productId)->where('email', $payload->email)->update('cart');
                 }
                 
-            }
-            else{
+            }else{
                 $this->db->insert('cart', $product);
-                }
+            }
+
             $response = array(
                 "status" => "Success",
                 "message" => "cart updated"
