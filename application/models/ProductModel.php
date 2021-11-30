@@ -95,9 +95,10 @@ class ProductModel extends CI_Model{
                 "quantity" => $payload->quantity,
                 "price" => $payload->price
             );
-            $query = $this->db->query("select product_id, quantity from cart where product_id = $payload->productId");
+            $query = $this->db->query("select product_id, quantity, email from cart where product_id = $payload->productId");
             if($query->num_rows() > 0 && isset($payload->deleteItem)){
                 $this->db->where('product_id', $payload->productId);
+                $this->db->where('email', $payload->email);
                 $this->db->delete('cart');
             }
             elseif($query->num_rows() > 0 && !isset($payload->deleteItem)){

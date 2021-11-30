@@ -33,6 +33,40 @@ class TransactionModel extends CI_Model{
     
     }
 
+    public function getTransaction(){
+        if (isset($payload)) {
+            $result1 = $this->db->select("transaction_id")->where('transaction_id',$payload->transactionId)->from("transaction")->get();
+            $result2 = $this->db->select("first_name,last_name")->where('transaction_id',$payload->transactionId)->from("user_info")->get();
+            if ($result1->num_rows() > 0) {
+                $response = array(
+                    "status" => "Success",
+                    "message" => "Fetch Success",
+                    "response" => $result1->result()
+                );
+
+                return json_encode($response);
+            }
+
+            if ($result2->num_rows() > 0) {
+                $response = array(
+                    "status" => "Success",
+                    "message" => "Fetch Success",
+                    "response" => $result2->result()
+                );
+
+                return json_encode($response);
+            }
+        }
+        else{
+            $response = array(
+                "status" => "Failed",
+                "message" => "Fetch Failed"
+            );
+            return json_encode($response);
+        }
+        
+    }
+
     public function tracKing($payload){
         if (isset($payload)){
             $progression = array(

@@ -13,7 +13,8 @@ class Userauthmodel extends CI_Model {
             $this->db->insert('user_account', $useraccount);
     
             $userinfo = array(
-                'full_name' => $payload->fullName,
+                'first_name' => $payload->firstName,
+                'last_name' => $payload->lastName,
                 'birthdate' => $payload->birthDate,
                 'gender' => $payload->gender,
                 'email' => $payload->email,
@@ -49,7 +50,7 @@ class Userauthmodel extends CI_Model {
 
     public function verifyLogin($payload){
         if (isset($payload)) {
-            $result = $this->db->select("user_account.username, user_info.email, user_info.full_name")->from("user_account")->join("user_info", "user_account.username = user_info.username")->where("user_account.username", $payload->username)->where("user_account.password", hash("sha256", $payload->password))->get();
+            $result = $this->db->select("user_account.username, user_info.email, user_info.first_name, user_info.last_name")->from("user_account")->join("user_info", "user_account.username = user_info.username")->where("user_account.username", $payload->username)->where("user_account.password", hash("sha256", $payload->password))->get();
             
             $result = $result->result();
             $isLogin = false;
@@ -63,7 +64,7 @@ class Userauthmodel extends CI_Model {
 
                 $isLogin = true;
             }else{
-                $result = $this->db->select("user_info.email, user_info.full_name")->from("user_account")->join("user_info", "user_account.username = user_info.username")->where("user_info.email", $payload->username)->where("user_account.password", hash("sha256", $payload->password))->get();
+                $result = $this->db->select("user_info.email, user_info.first_name, user_info.last_name")->from("user_account")->join("user_info", "user_account.username = user_info.username")->where("user_info.email", $payload->username)->where("user_account.password", hash("sha256", $payload->password))->get();
                 $result = $result->result();
 
                 if (count($result)) {
@@ -143,7 +144,8 @@ class Userauthmodel extends CI_Model {
             $this->db->update('user_account'); 
 
             $userInfo = array(
-                'full_name' => $payload->fullName,
+                'first_name' => $payload->firstName,
+                'last_name' => $payload->lastName,
                 'birthdate' => $payload->birthDate,
                 'gender' => $payload->gender,
                 'email' => $payload->newEmail,

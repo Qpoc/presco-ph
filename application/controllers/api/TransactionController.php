@@ -11,4 +11,9 @@ class TransactionController extends CI_Controller{
         $payload = json_decode(file_get_contents("php://input"));
         echo $this->TransactionModel->tracKing($payload);
     }
+
+    public function getTransaction(){
+        $payload = json_decode(file_get_contents("php://input"));
+        echo $this->TransactionModel->getTransaction($payload);
+    }
 }
