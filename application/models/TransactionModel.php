@@ -36,7 +36,7 @@ class TransactionModel extends CI_Model{
     public function getTransaction(){
         if (isset($payload)) {
             $result1 = $this->db->select("transaction_id")->where('transaction_id',$payload->transactionId)->from("transaction")->get();
-            $result2 = $this->db->select("first_name,last_name")->where('transaction_id',$payload->transactionId)->from("user_info")->get();
+            $result2 = $this->db->select("first_name,last_name")->where('transaction_id',$payload->transactionId)->from("user_info")->join("transaction","transaction.email = user_info.email")->get();
             if ($result1->num_rows() > 0) {
                 $response = array(
                     "status" => "Success",
