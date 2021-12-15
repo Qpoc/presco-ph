@@ -40,9 +40,9 @@ $(document).ready(function () {
             if (response.status == "Success") {
                 Cookies.set('email', username, { expires: 10 })
                 if (response.type == "admin") {
-                    window.location.replace('/presco-ph/admin');
+                    window.location.replace(base_url + 'admin');
                 }else {
-                    window.location.replace('/presco-ph');
+                    window.location.replace(base_url);
                 }
             }
         });
@@ -53,9 +53,9 @@ $(document).ready(function () {
         prescoExecuteGET("api/UserAuthController/verifyLogout", function (res) { 
             console.log(res);
             if ($(e.target).attr("user-type") == 'admin') {
-                window.location.replace('/presco-ph/login');
+                window.location.replace(base_url + 'login');
             }else{
-                window.location.replace('/presco-ph');
+                window.location.replace(base_url);
             }
             Cookies.remove('email');
         });
