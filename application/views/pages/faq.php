@@ -3,7 +3,7 @@
         <div class="accordion w-50" id="accordionExample">
             <div class="accordion-item my-5 shadow border-0 rounded-3">
                 <h2 class="accordion-header" id="headingOne">
-                    <button class="accordion-button text-primary fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    <button class="accordion-button collapsed text-primary fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                         What is the price list of Pres Co Candles?
                     </button>
                 </h2>
@@ -22,7 +22,7 @@
             </div>
             <div class="accordion-item my-5 shadow border-0 rounded-3">
                 <h2 class="accordion-header" id="headingOne">
-                    <button class="accordion-button text-primary fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                    <button class="accordion-button collapsed text-primary fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
                         What are your delivery fees?
                     </button>
                 </h2>
@@ -38,7 +38,7 @@
             </div>
             <div class="accordion-item my-5 shadow border-0 rounded-3">
                 <h2 class="accordion-header" id="headingOne">
-                    <button class="accordion-button text-primary fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+                    <button class="accordion-button collapsed text-primary fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
                         What is the price list of Pres Co Candles?
                     </button>
                 </h2>
@@ -52,7 +52,7 @@
             </div>
             <div class="accordion-item my-5 shadow border-0 rounded-3">
                 <h2 class="accordion-header" id="headingOne">
-                    <button class="accordion-button text-primary fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
+                    <button class="accordion-button collapsed text-primary fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
                         Example Question?
                     </button>
                 </h2>

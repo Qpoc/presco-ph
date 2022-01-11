@@ -33,7 +33,7 @@ $(document).ready(function () {
         </div>`);
     }
 
-    function getCart(cart) {    
+    function getCart(cart) {
         prescoExecutePOST("api/ProductController/getCart", cart, function (res) { 
             if (res.status == "Success") {
                 $("#cartItems").html("");
@@ -65,7 +65,7 @@ $(document).ready(function () {
                 });
                 $("#cartItems").append(`<hr>
                 <div class="cart-item-button my-1 d-flex justify-content-end">
-                    <button class="btn btn-sm btn-primary ms-auto">View My Shopping Cart</button>
+                    <a href=${base_url}cart class="text-primary btn btn-sm btn-primary">View My Shopping Cart</a>
                 </div>`)
                 $(".inCartNumber").unbind("change keyup").on("change keyup", function(e){
                     const inCartNumber = $(e.target);

@@ -195,4 +195,31 @@ class ProductModel extends CI_Model{
         }
     }
 
+    public function loadShipping($productid){
+        if (isset($productid)) {
+            $result = $this->db->select("product.product_id, product.product_name, product.image, product.price, product.stocks")->from("product")->where('product.product_id',$productid)->get();
+
+            if ($result->num_rows() > 0) {
+                $response = array(
+                    "status" => "Success",
+                    "message" => "Fetch Success",
+                    "response" => $result->result()
+                );
+            }else {
+                $response = array(
+                    "status" => "Failed",
+                    "message" => "No Data",
+                    "response" => $result->result()
+                );
+            }
+            return json_encode($response);
+        }else{
+            $response = array(
+                "status" => "Failed",
+                "message" => "Fetch Failed"
+            );
+            return json_encode($response);
+        }
+    }
+
 }

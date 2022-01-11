@@ -98,6 +98,52 @@ $(document).ready(function () {
                     window.location.replace(base_url + '/login')
                 }
             });
+
+            $(".btnBuyNow").unbind("click").on("click", function (e) { 
+                if (Cookies.get("email") !== undefined) {
+                    const btnAddToCart = $(e.target);
+                    const productContainer = btnAddToCart.closest(".product-container-home");
+                    const productID = btnAddToCart.closest(".product-container-home").attr("product-id");
+                    console.log(productID);
+                    const payload = {
+                        "email" : Cookies.get("email"),
+                        "productId" : productID,
+                        "quantity" : "1",
+                        "price": productContainer.find(".product-price").text()
+                    }
+
+                    const productName = productContainer.find(".product-name").val();
+    
+                    prescoExecutePOST("api/ProductController/shipping", {"productid" : productID}, function (res) {
+                        // if (res.status == "Success") {
+                        //     $("#cartItems").html("");
+                        //     const cart = {
+                        //         "email" : Cookies.get('email') ? Cookies.get('email') : null
+                        //     }
+    
+                        //     getCart(cart);
+    
+                        //     $("#toastAddToCart").html(`
+                        //             <div id="liveToast" class="toast bg-primary shadow-lg" role="alert" aria-live="assertive" aria-atomic="true" data-bs-animation="true">
+                        //             <div class="toast-header">
+                        //                 <strong class="me-auto text-primary">Add to Cart</strong>
+                        //                 <small>Now</small>
+                        //                 <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                        //             </div>
+                        //             <div class="toast-body text-secondary">
+                        //                 ${productName + " " + "has been added to your cart."} 
+                        //             </div>
+                        //             </div>
+                        //         `)
+                        //     $('.toast').toast('show');
+                        // }
+                    });
+
+                    window.location.href = base_url + "/shipping";
+                }else{
+                    window.location.replace(base_url + '/login')
+                }
+            });
             
             $(".btnAddToCart").unbind("click").on("click", function (e) { 
                 if (Cookies.get("email") !== undefined) {

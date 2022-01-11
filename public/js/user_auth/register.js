@@ -57,8 +57,8 @@ $(document).ready(function () {
             }else{
                 window.location.replace(base_url);
             }
-            Cookies.remove('email');
         });
+        Cookies.remove('email');
     });
     
 });

@@ -29,5 +29,26 @@ class ProductController extends CI_Controller  {
         echo $this->ProductModel->updateProduct($payload);
 
     }
+
+    public function shipping(){
+        $payload = json_decode(file_get_contents("php://input"));
+        if (is_array($payload)) {
+            $_SESSION['productid'] = $payload;
+        }else {
+            $_SESSION['productid'] = $payload->productid;
+        }
+    }
+
+    public function loadShipping(){
+        if (isset($_SESSION['productid'][0]->viewCart)) {
+            echo json_encode(array(
+                "status" => "Success",
+                "message" => "Fetch Success",
+                "response" => $_SESSION['productid'],
+            ));
+        }else {
+            echo $this->ProductModel->loadShipping($_SESSION['productid']);
+        }
+    }
     
 }
