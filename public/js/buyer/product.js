@@ -107,14 +107,12 @@ $(document).ready(function () {
                     console.log(productID);
                     const payload = {
                         "email" : Cookies.get("email"),
-                        "productId" : productID,
-                        "quantity" : "1",
-                        "price": productContainer.find(".product-price").text()
+                        "productid" : productID,
                     }
 
                     const productName = productContainer.find(".product-name").val();
     
-                    prescoExecutePOST("api/ProductController/shipping", {"productid" : productID}, function (res) {
+                    prescoExecutePOST("api/ProductController/shipping", payload, function (res) {
                         // if (res.status == "Success") {
                         //     $("#cartItems").html("");
                         //     const cart = {

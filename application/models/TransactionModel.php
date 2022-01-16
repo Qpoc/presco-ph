@@ -2,10 +2,9 @@
 
 class TransactionModel extends CI_Model{
 
-    public function tranSaction($payload){
+    public function transaction($payload){
         if (isset($payload)){
             $transaction = array(
-
                 "email" => $payload->email,
                 "product_id" => $payload->productId,
                 "price"=> $payload->price,
@@ -29,8 +28,6 @@ class TransactionModel extends CI_Model{
 
             return json_encode($response);
         }
-
-    
     }
 
     public function getTransaction(){

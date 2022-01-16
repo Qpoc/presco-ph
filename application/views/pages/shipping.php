@@ -19,17 +19,19 @@
         -webkit-line-clamp: 2;
     }
 </style>
-<div class="row" id="shipping-container">
-    <div class="col-lg-8 mt-5">
-        <div class="row bg-primary shadow p-3" style="max-width: 800px; min-height: 112px;" id="shipping-products">
+<form role="form" action="<?php echo base_url('handleStripePayment');?>" method="post" class="form-validation" data-cc-on-file="false" data-stripe-publishable-key="<?php echo $this->config->item('stripe_key') ?>" id="payment-form">
+    <div class="row" id="shipping-container">
+        <div class="col-lg-8 mt-5">
+            <div class="row bg-primary shadow p-3" style="max-width: 800px; min-height: 112px;" id="shipping-products">
+            </div>
+        </div>
+        <div class="col-lg-4 mt-5">
+            <div class="row bg-primary shadow p-3" style="min-height: 112px;" id="shipping-info">
+                
+            </div>
         </div>
     </div>
-    <div class="col-lg-4 mt-5">
-        <div class="row bg-primary shadow p-3" style="min-height: 112px;" id="shipping-info">
-            
-        </div>
-    </div>
-</div>
+</form>
 
 <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
 
@@ -40,7 +42,8 @@
         prescoExecuteGET("api/ProductController/loadShipping", function(res){
             res.response.forEach(product => {
                 $("#shipping-products").append(`
-                    <div class="col-lg-12 shipping-product" product-id="${product.product_id   }">
+                    <div class="col-lg-12 shipping-product" product-id="${product.id ? product.id : product.product_id}">
+                        <input type="hidden" name="productsid[]" value="${product.id ? product.id : product.product_id}"/>
                         <div class="row">
                             <div class="col-lg-2">
                                 <div class="product-img">
@@ -55,7 +58,7 @@
                                     <p class="text-primary">&#8369; ${product.price}</p>
                                 </div>
                                 <div class="product-actions">
-                                    <input style="width: 60px;" class="form-control form-control-sm product-quantity" type="number" min="1" step="1" value="${product.viewCart ? product.quantity : 1}">
+                                    <input style="width: 60px;" name="productQuantity[]" class="form-control form-control-sm product-quantity" type="number" min="1" step="1" value="${product.viewCart ? product.quantity : 1}">
                                 </div>
                             </div>
                         </div>
@@ -73,8 +76,9 @@
                             <p class="fw-bold text-primary">Location: <span class="fw-normal text-primary">${info.address}</span></p>
                             <p class="fw-bold text-primary">Contact: <span class="fw-normal text-primary">09447485874</span></p>
                             <p class="fw-bold text-primary">Email: <span class="fw-normal text-primary">${info.email}</span></p>
+                            <input type="hidden" name="email" value="${Cookies.get('email')}"/>
                             <div>
-                                <select class="form-select form-select-sm" name="" id="MOP">
+                                <select class="form-select form-select-sm" name="modePayment" id="MOP">
                                     <option value="" disabled>Select Mode of Payment</option>
                                     <option value="1" selected>Cash on Delivery</option>
                                     <option value="2">Debit/Credit Card</option>
@@ -110,58 +114,54 @@
                                     <p><?php echo $this->session->flashdata('success'); ?></p>
                                 </div>
                                 <?php } ?>
-                                <form role="form" action="<?php echo base_url('handleStripePayment');?>" method="post"
-                                    class="form-validation" data-cc-on-file="false"
-                                    data-stripe-publishable-key="<?php echo $this->config->item('stripe_key') ?>"
-                                    id="payment-form">
-                                    <div class='form-row row my-3'>
-                                        <div class='col-xs-12 form-group required'>
-                                            <label class='control-label'>Name on Card</label>
-                                            <input class='form-control form-control-sm' size='4' type='text'>
-                                        </div>
+                                <div class='form-row row my-3'>
+                                    <div class='col-xs-12 form-group required'>
+                                        <label class='control-label'>Name on Card</label>
+                                        <input class='form-control form-control-sm' size='4' type='text'>
                                     </div>
-                                    <div class='form-row row my-3'>
-                                        <div class='col-xs-12 form-group required'>
-                                            <label class='control-label'>Card Number</label>
-                                            <input autocomplete='off' class='form-control form-control-sm card-number' size='20' type='text'>
-                                        </div>
+                                </div>
+                                <div class='form-row row my-3'>
+                                    <div class='col-xs-12 form-group required'>
+                                        <label class='control-label'>Card Number</label>
+                                        <input autocomplete='off' class='form-control form-control-sm card-number' size='20' type='text'>
                                     </div>
-                                    <div class='form-row row gy-3'>
-                                        <div class='col-xs-12 col-md-6 form-group cvc required'>
-                                            <label class='control-label'>CVC</label>
-                                            <input autocomplete='off' class='form-control form-control-sm card-cvc' placeholder='ex. 311'
-                                                size='4' type='text'>
-                                        </div>
-                                        <div class='col-xs-12 col-md-6 form-group expiration required'>
-                                            <label class='control-label'>Expiration Month</label>
-                                            <input class='form-control form-control-sm card-expiry-month' placeholder='MM' size='2' type='text'>
-                                        </div>
-                                        <div class='col-xs-12 col-md-6 form-group expiration required'>
-                                            <label class='control-label'>Expiration Year</label>
-                                            <input class='form-control form-control-sm card-expiry-year' placeholder='YYYY' size='4'
-                                                type='text'>
-                                        </div>
+                                </div>
+                                <div class='form-row row gy-3'>
+                                    <div class='col-xs-12 col-md-6 form-group cvc required'>
+                                        <label class='control-label'>CVC</label>
+                                        <input autocomplete='off' class='form-control form-control-sm card-cvc' placeholder='ex. 311'
+                                            size='4' type='text'>
                                     </div>
-                                    <div class='form-row row my-3'>
-                                        <div class='col-md-12 error form-group d-none'>
-                                            <div class='alert-danger alert'></div>
-                                        </div>
+                                    <div class='col-xs-12 col-md-6 form-group expiration required'>
+                                        <label class='control-label'>Expiration Month</label>
+                                        <input class='form-control form-control-sm card-expiry-month' placeholder='MM' size='2' type='text'>
                                     </div>
+                                    <div class='col-xs-12 col-md-6 form-group expiration required'>
+                                        <label class='control-label'>Expiration Year</label>
+                                        <input class='form-control form-control-sm card-expiry-year' placeholder='YYYY' size='4'
+                                            type='text'>
+                                    </div>
+                                </div>
+                                <div class='form-row row my-3'>
+                                    <div class='col-md-12 error form-group d-none'>
+                                        <div class='alert-danger alert'></div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="col-lg-12">
+                                    <h5 class="fw-bold text-primary">Summary</h5>
+                                    <p class="sub-total fw-bold text-primary">Subtotal: <span id="txtSubTotal" class="fw-normal text-primary">&#8369; 0.00</span></p>
+                                    <input type='hidden' id="subTotal" name="subTotal" value="0"/>
+                                    <p class="delivery-fee fw-bold text-primary">Delivery Fee: <span id="txtDelFee" class="fw-normal text-primary">&#8369; 0.00</span></p>
+                                    <input type='hidden' id="deliveryFee" name="deliveryFee" value="0"/>
                                     <hr>
-                                    <div class="col-lg-12">
-                                        <h5 class="fw-bold text-primary">Summary</h5>
-                                        <p class="sub-total fw-bold text-primary">Subtotal: <span id="txtSubTotal" class="fw-normal text-primary">&#8369; 0.00</span></p>
-                                        <input type='hidden' id="subTotal" name="subTotal" value="0"/>
-                                        <p class="delivery-fee fw-bold text-primary">Delivery Fee: <span id="txtDelFee" class="fw-normal text-primary">&#8369; 0.00</span></p>
-                                        <input type='hidden' id="deliveryFee" name="deliveryFee" value="0"/>
-                                        <hr>
-                                        <p class="total fw-bold text-primary">Total: <span id="txtTotal" class="fw-normal text-primary">&#8369; 0.00</span></p>
-                                        <input type='hidden' id="total" name="total" value="0"/>
-                                    </div>
-                                    <div class="col-lg-12 d-flex justify-content-end">
-                                        <button class="btn btn-primary btn-sm btn-lg btn-block" type="submit">Place Order</button>
-                                    </div>
-                                </form>
+                                    <p class="total fw-bold text-primary">Total: <span id="txtTotal" class="fw-normal text-primary">&#8369; 0.00</span></p>
+                                    <input type='hidden' id="total" name="total" value="0"/>
+                                </div>
+                                <div class="col-lg-12 d-flex justify-content-end">
+                                    <button class="btn btn-primary btn-sm btn-lg btn-block" type="submit">Place Order</button>
+                                </div>
+                               
                             </div>
                         `);
                         var $stripeForm = $(".form-validation");
