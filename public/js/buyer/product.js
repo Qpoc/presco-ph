@@ -37,7 +37,7 @@ $(document).ready(function () {
         
             data.response.forEach(product => {
                 $("#card-section").append(`
-                    <div class="col-lg-4 product-container-home" product-id = ${product.product_id}>
+                    <div class="product-container-home" style="width: 425px;" product-id = ${product.product_id}>
                         <div class="card mx-3 shadow-lg">
                             <div class="product-image">
                                 <img src="${base_url + product.image}" class="card-img-top" alt="...">
@@ -59,6 +59,7 @@ $(document).ready(function () {
                             <div class="card-body d-flex justify-content-center">
                                 <button class="btn btn-sm btn-primary mx-3 btnBuyNow">Buy Now</button>
                                 <button class="btn btn-sm btn-primary mx-3 btnAddToCart">Add to Cart</button>
+                                <button class="btn btn-sm btn-primary mx-3 btnDetails">Details</button>
                             </div>
                         </div>
                     </div>
@@ -137,9 +138,9 @@ $(document).ready(function () {
                         // }
                     });
 
-                    window.location.href = base_url + "/shipping";
+                    window.location.href = base_url + "shipping";
                 }else{
-                    window.location.replace(base_url + '/login')
+                    window.location.replace(base_url + 'login')
                 }
             });
             
@@ -183,6 +184,19 @@ $(document).ready(function () {
                 }else{
                     window.location.replace(base_url + '/login')
                 }
+            });
+
+            $(".btnDetails").unbind("click").on("click", function (e) {
+                const btnDetails = $(e.target);
+                const productID = btnDetails.closest(".product-container-home").attr("product-id");
+                const payload = {
+                    "productid" : productID
+                }
+                prescoExecutePOST("api/ProductController/initProductDetails", payload, function (res) {
+                    
+                });
+
+                window.location.href = base_url + "viewProduct";
             });
             
         });

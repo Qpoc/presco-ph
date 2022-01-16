@@ -161,7 +161,6 @@
                                 <div class="col-lg-12 d-flex justify-content-end">
                                     <button class="btn btn-primary btn-sm btn-lg btn-block" type="submit">Place Order</button>
                                 </div>
-                               
                             </div>
                         `);
                         var $stripeForm = $(".form-validation");
@@ -213,6 +212,7 @@
                             }
                         }
                     }else {
+                        $('form.form-validation').unbind('submit');
                         $("#nonCOD").html(`
                             <div class="col-lg-12">
                                 <h5 class="fw-bold text-primary">Summary</h5>
@@ -225,7 +225,7 @@
                                 <input type='hidden' id="total" name="total" value="0"/>
                             </div>
                             <div class="col-lg-12 d-flex justify-content-end">
-                                <button class="btn btn-primary btn-sm btn-lg btn-block">Place Order</button>
+                                <button type="submit" class="btn btn-primary btn-sm btn-lg btn-block">Place Order</button>
                             </div>
                         `);
                     }

@@ -40,7 +40,7 @@
     </div>
 </div>
 <div class="col-lg-12 p-3">
-    <div class="row gy-3" id="card-section">
+    <div class="row gy-3 d-flex align-items-center justify-content-center" id="card-section">
         
     </div>
 </div>

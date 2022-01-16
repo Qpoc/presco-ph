@@ -37,7 +37,11 @@ class WishListModel extends CI_Model{
     }
 
     public function getWishList($payload){
-        $result = $this->db->select("*")->from('wishlist')->where('email', $payload->email)->get();
+        if (isset($payload->productid)) {
+            $result = $this->db->select("*")->from('wishlist')->where('email', $payload->email)->where('product_id', $payload->productid)->get();
+        }else {
+            $result = $this->db->select("*")->from('wishlist')->where('email', $payload->email)->get();
+        }
         
         if ($result->num_rows() > 0) {
             $response = array(

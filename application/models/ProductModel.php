@@ -61,8 +61,10 @@ class ProductModel extends CI_Model{
     }
 
     public function getProduct($payload){
-        if (isset($payload)) {
+        if (isset($payload->featured)) {
             $result = $this->db->select("*")->from("product")->where("featured", $payload->featured)->get();
+        }else if(isset($payload->productid)){
+            $result = $this->db->select("*")->from("product")->where("product_id", $payload->productid)->get();
         }else{
             $result = $this->db->select("*")->from("product")->get();
         }
