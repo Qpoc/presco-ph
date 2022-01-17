@@ -16,6 +16,7 @@
                     <div class="view-product-quantity d-flex">
                         <p class="text-secondary mt-1">Quantity: </p>
                         <input id="productQuantity" class="view-product-quantity-tf form-control form-control-sm" type="number" value="1" min="1" step="1">
+                        <span id="productStocks" class="text-secondary mx-3 mt-1"> hello</span>
                     </div>
                 </div>
                 <div class="view-product-buttons d-flex mt-3">
@@ -49,7 +50,8 @@
                 $("#productName").html(product.response[0].product_name);
                 $("#productPrice").html("&#8369; " + product.response[0].price);
                 $("#productDescription").html(product.response[0].description);
-                
+                $("#productStocks").html(product.response[0].stocks + " piece available");
+
                 prescoExecutePOST("api/WishListController/getWishList", payload, function (wishlist) {
                     if (wishlist.status == "Success") {
                         $(".bi-heart-fill").addClass('added-to-wishlist');

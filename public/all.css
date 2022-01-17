@@ -119,13 +119,12 @@ a {
 }
 
 .product-container-home.product-container-shop .card > .product-image {
-    max-height: 300px !important;
     max-width: 300px !important;
 }
 
 .product-container-home.product-container-shop .card > .product-image > img {
-    height: 100% !important;
     width: 100% !important;
+    object-fit: cover;
 }
 
 .product-container-home .product-image {

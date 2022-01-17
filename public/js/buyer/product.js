@@ -49,7 +49,7 @@ $(document).ready(function () {
                                 </div>
                             </div>
                             <div class="card-body">
-                                <h5 class="card-title text-primary fw-bold">${product.product_name} <sup class="text-secondary fw-light" style="font-size: 12px;">${product.stocks} Pieces available</sup></h5>
+                                <h5 class="card-title text-primary fw-bold">${product.product_name}</h5>
                                 <input type="hidden" class="product-name" value="${product.product_name}"/>
                                 <div class="product-description text-secondary">
                                     <p class="card-text">${product.description}</p>

@@ -224,4 +224,50 @@ class ProductModel extends CI_Model{
         }
     }
 
+    public function getCategory(){
+        $result = $this->db->select("*")->from("category")->get();
+        if ($result->num_rows() > 0) {
+            $response = array(
+                "status" => "Success",
+                "message" => "Fetch Success",
+                "response" => $result->result()
+            );
+        }else {
+            $response = array(
+                "status" => "Failed",
+                "message" => "No Data",
+                "response" => $result->result()
+            );
+        }
+
+        return json_encode($response);
+    }
+
+    public function getCategoryDetails($payload){
+        if (isset($payload)) {
+            $result = $this->db->select("*")->from("product")->where('category_type', $payload->categoryType)->where('category_name', $payload->categoryName)->get();
+            
+            if ($result->num_rows() > 0) {
+                $response = array(
+                    "status" => "Success",
+                    "message" => "Fetch Success",
+                    "response" => $result->result()
+                );
+            }else {
+                $response = array(
+                    "status" => "Failed",
+                    "message" => "No Data",
+                    "response" => $result->result()
+                );
+            }
+            return json_encode($response);
+        }else{
+            $response = array(
+                "status" => "Failed",
+                "message" => "Fetch Failed"
+            );
+            return json_encode($response);
+        }
+    }
+
 }

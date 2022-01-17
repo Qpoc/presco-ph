@@ -82,5 +82,18 @@ class ProductController extends CI_Controller  {
     public function getProductDetails(){
         echo json_encode($_SESSION['productDetails']);
     }
+
+    public function getCategory(){
+        echo $this->ProductModel->getCategory();
+    }
+
+    public function initCategoryDetails(){
+        $payload = json_decode(file_get_contents("php://input"));
+        $_SESSION['productCategory'] = $payload;
+    }
+
+    public function getCategoryDetails(){
+        echo $this->ProductModel->getCategoryDetails($_SESSION['productCategory']);
+    }
     
 }
