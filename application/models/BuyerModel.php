@@ -4,7 +4,7 @@ class BuyerModel extends CI_Model{
 
     public function getBuyerInfo($payload){
         if (isset($payload)) {
-            $result = $this->db->select("user_info.first_name,user_info.last_name, user_info.email, user_address.address")->from("user_info")->join("user_address", "user_info.email = user_address.email")->where('user_info.email',$payload->email)->get();
+            $result = $this->db->select("user_info.first_name,user_info.last_name, user_info.email, user_info.gender, user_info.contact_number, user_info.birthdate, user_address.address")->from("user_info")->join("user_address", "user_info.email = user_address.email")->where('user_info.email',$payload->email)->get();
 
             if ($result->num_rows() > 0) {
                 $response = array(

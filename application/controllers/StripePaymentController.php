@@ -37,6 +37,8 @@ class StripePaymentController extends CI_Controller {
         $transaction = array(
             "transaction_id" => $transactionid,
             "email" => $this->input->post('email'),
+            "price" => $this->input->post('subTotal'),
+            "delivery_fee" => $this->input->post('deliveryFee'),
             "total_price" => $this->input->post('total'), 
             "mode_payment" => $this->input->post('modePayment')
         );

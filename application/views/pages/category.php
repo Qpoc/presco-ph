@@ -296,8 +296,13 @@
 
         function getWishlistProduct() {
             prescoExecutePOST("api/WishListController/getWishList", payload, function (wishlist) {
-                let wishlistItem = wishlist.response.map(element => element.product_id);
-                getProduct(wishlistItem);
+                if (wishlist.status == "Success") {
+                    let wishlistItem = wishlist.response.map(element => element.product_id);
+                    getProduct(wishlistItem);
+                }else{
+                    const wishlistItem = []
+                    getProduct(wishlistItem)
+                }
             });
         }
     });

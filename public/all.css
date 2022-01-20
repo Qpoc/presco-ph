@@ -326,3 +326,25 @@ canvas {
     max-width: 100%;
     max-height: 100%;
 }
+
+/* order profile page */
+.order-product-list-img {
+    min-width: 32px;
+    min-height: 32px;
+    width: 32px;
+    height: 32px;
+}
+
+.order-product-list-img > img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.order-product-list-name, .wishlist-product-list-name {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    word-wrap: break-word;
+    -webkit-line-clamp: 2;
+    text-overflow: ellipsis;
+}

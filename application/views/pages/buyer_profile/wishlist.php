@@ -16,13 +16,8 @@
                                 <th>Action</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td>Product 1</td>
-                                <td>
-                                    <button class="btn btn-sm btn-primary">Add to Cart</button>
-                                </td>
-                            </tr>
+                        <tbody id="wishlistTable">
+
                         </tbody>
                     </table>
                 </div>
@@ -30,3 +25,28 @@
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function(){
+        prescoExecutePOST("api/WishListController/getWishList", {
+            "email" : Cookies.get('email')
+        }, function (wishlists) {
+            if (wishlists.status == "Success") {
+                wishlists.response.forEach(wishlist => {
+                    $("#wishlistTable").append(`
+                        <tr product-id="${wishlist.product_id}">
+                            <td class="d-flex flex-column align-items-center justify-content-center">
+                                <div class="wishlist-product-list-img" style="min-height: 64px; height: 64px; min-width: 64px; width: 64px;">
+                                    <img src="${base_url + wishlist.image}" style="max-width: 100%; max-height: 100%;"/>
+                                </div>
+                                <p class="wishlist-product-list-name">${wishlist.product_name}</p>
+                            </td>
+                            <td>
+                                <button class="btn btn-sm btn-primary btnAddtoCart">Add to Cart</button>
+                            </td>
+                        </tr>
+                    `);
+                });
+            }
+        });
+    })
+</script>
