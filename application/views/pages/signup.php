@@ -8,7 +8,13 @@
                         <h6 class="text-secondary fw-bold">Personal Information</h6>
                     </div>
                     <div class="col-lg-12">
-                        <input type="text" id="fullName" class="form-control form-control-sm mt-3 presco-input registration-input" placeholder="Full Name">
+                        <input type="text" id="firstName" class="form-control form-control-sm mt-3 presco-input registration-input" placeholder="First Name">
+                    </div>
+                    <div class="col-lg-12">
+                        <input type="text" id="lastName" class="form-control form-control-sm mt-3 presco-input registration-input" placeholder="Last Name">
+                    </div>
+                    <div class="userinfo">
+                        <input id="addressField" class="form-control form-control-sm mt-3 presco-input registration-input" placeholder="Address" type='text' name='address' value='' required />
                     </div>
                     <div class="col-lg-12">
                         <input type="text" id="birthDate" class="form-control form-control-sm mt-3 presco-input registration-input" placeholder="Birth Date" readonly>
@@ -30,6 +36,9 @@
                     </div>
                     <div class="col-lg-12">
                         <input type="text" id="email" class="form-control form-control-sm mt-3 presco-input registration-input" placeholder="Email Address">
+                    </div>
+                    <div class="col-lg-12">
+                        <input type="text" id="contactNumber" class="form-control form-control-sm mt-3 presco-input registration-input" placeholder="Contact No.">
                     </div>
                     <div class="col-lg-12">
                         <input type="password" id="password" class="form-control form-control-sm mt-3 presco-input registration-input" placeholder="Password" autocomplete="on">

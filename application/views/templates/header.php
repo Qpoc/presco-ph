@@ -12,6 +12,11 @@
         <script src="<?php echo base_url();?>public/js/third_party/js.cookie.min.js"></script>
         <script src="<?php echo base_url();?>public/js/callback/ajax.js"></script>
         <script src="<?php echo base_url();?>public/js/third_party/bootstrap-datepicker.min.js"></script>
+        <!-- Mapbox -->
+        <link href="https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css" rel="stylesheet">
+        <script src="https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js"></script>
+        <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.min.js'></script>
+        <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.css' type='text/css' />
         <script>var base_url = '<?php echo base_url() ?>';</script>
     </head>
 	<body>

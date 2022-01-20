@@ -5,6 +5,8 @@ class Userauthmodel extends CI_Model {
     public function registerUser($payload){
         
         if (isset($payload)) {
+            $this->db->trans_begin();
+            
             $useraccount = array(
                 'username' => $payload->username,
                 'password' => hash("sha256", $payload->password)
@@ -36,6 +38,14 @@ class Userauthmodel extends CI_Model {
                 "status" => "Success",
                 "message" => "Account Created"
             );
+
+            $this->db->trans_complete();
+
+            if ($this->db->trans_status() === FALSE){
+                $this->db->trans_rollback();
+            }else{
+                $this->db->trans_commit();
+            }
 
             return json_encode($response);
         }else {

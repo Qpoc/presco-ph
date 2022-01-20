@@ -5,20 +5,26 @@ $(document).ready(function () {
     });
 
     $("#btnRegister").unbind("click").on("click", function (e) { 
-        const fullName = $("#fullName").val();
+        const firstName = $("#firstName").val();
+        const lastName = $("#lastName").val();
         const birthDate = $("#birthDate").val();
         const gender = $("#gender").val();
         const username = $("#username").val();
         const email = $("#email").val();
         const password = $("#password").val();
+        const contactNumber = $("#contactNumber").val();
+        const address = $("#addressField").val();
         
         const payload = {
-            "fullName" : fullName,
+            "firstName" : firstName,
+            "lastName" : lastName,
             "birthDate" : birthDate,
             "gender" : gender,
             "username" : username,
             "email" : email,
             "password" : password,
+            "contactNumber" : contactNumber,
+            "address" : address
         }
         
         prescoExecutePOST("api/UserAuthController/registerUser", payload, function (response) {
