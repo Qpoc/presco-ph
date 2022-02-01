@@ -1,12 +1,15 @@
 
 <div class="col-lg-12">
-    <div class="d-flex view-product-container justify-content-center p-5">
+    <div class="d-flex view-product-container justify-content-center pt-5 ps-5 pe-5">
         <div class="view-product-img">
             <img id="productImg" src="" alt="">
         </div>
         <div class="view-product-body mx-5">
             <div class="view-product-title">
                 <h1 id="productName" class="text-primary view-product-name"></h1>
+            </div>
+            <div id="ratings" class="mb-3">
+
             </div>
             <div class="view-product-subtitle">
                 <h4 id="productPrice" class="text-secondary view-product-name">/h4>
@@ -16,7 +19,7 @@
                     <div class="view-product-quantity d-flex">
                         <p class="text-secondary mt-1">Quantity: </p>
                         <input id="productQuantity" class="view-product-quantity-tf form-control form-control-sm" type="number" value="1" min="1" step="1">
-                        <span id="productStocks" class="text-secondary mx-3 mt-1"> hello</span>
+                        <span id="productStocks" class="text-secondary mx-3 mt-1"> </span>
                     </div>
                 </div>
                 <div class="view-product-buttons d-flex mt-3">
@@ -26,10 +29,45 @@
                         <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
                     </svg>
                 </div>
-                <div class="view-product-description mt-3">
-                    <h3 class="text-primary">Description: </h3>
-                    <p id="productDescription" class="text-secondary text-justify"></p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-lg-12 d-flex flex-column justify-content-center align-items-center">
+    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="pills-description-tab" data-bs-toggle="pill" data-bs-target="#pills-description" type="button" role="tab" aria-controls="pills-description" aria-selected="true">Description</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="pills-review-tab" data-bs-toggle="pill" data-bs-target="#pills-review" type="button" role="tab" aria-controls="pills-review" aria-selected="false">Ratings and Reviews</button>
+        </li>
+    </ul>
+    <div class="tab-content ps-5 pe-5" id="pills-tabContent">
+        <div class="text-start tab-pane fade show active" id="pills-description" role="tabpanel" aria-labelledby="pills-description-tab">
+            <p id="productDescription" class="text-secondary"></p>
+        </div>
+        <div class="tab-pane fade" style="min-width: 700px; max-width: 700px;" id="pills-review" role="tabpanel" aria-labelledby="pills-review-tab">
+            <div class="rating-reports-container">
+                <h4 class="text-primary"><span class="fw-bold" id="ratingsAve"></span> out of 5</h4>
+                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                    <li class="nav-item d-flex" role="presentation">
+                        <button star-rating="all" class="btnFilterStar nav-link active btn-sm" id="pill-all-tab" data-bs-toggle="pill" data-bs-target="#pill-all" type="button" role="tab" aria-controls="pill-all" aria-selected="true">All</button>
+                        <button star-rating="5" class="btnFilterStar nav-link btn-sm" id="pill-all-tab" data-bs-toggle="pill" data-bs-target="#pill-all" type="button" role="tab" aria-controls="pill-all" aria-selected="true">5 star<span star-rating="5" id="star5">(0)</span></button>
+                        <button star-rating="4" class="btnFilterStar nav-link btn-sm" id="pill-all-tab" data-bs-toggle="pill" data-bs-target="#pill-all" type="button" role="tab" aria-controls="pill-all" aria-selected="true">4 star<span star-rating="4" id="star4">(0)</span></button>
+                        <button star-rating="3" class="btnFilterStar nav-link btn-sm" id="pill-all-tab" data-bs-toggle="pill" data-bs-target="#pill-all" type="button" role="tab" aria-controls="pill-all" aria-selected="true">3 star<span star-rating="3" id="star3">(0)</span></button>
+                        <button star-rating="2" class="btnFilterStar nav-link btn-sm" id="pill-all-tab" data-bs-toggle="pill" data-bs-target="#pill-all" type="button" role="tab" aria-controls="pill-all" aria-selected="true">2 star<span star-rating="2" id="star2">(0)</span></button>
+                        <button star-rating="1" class="btnFilterStar nav-link btn-sm" id="pill-all-tab" data-bs-toggle="pill" data-bs-target="#pill-all" type="button" role="tab" aria-controls="pill-all" aria-selected="true">1 star<span star-rating="1" id="star1">(0)</span></button>
+                    </li>
+                </ul>
+                <div class="tab-content ps-5 pe-5" id="pills-tabContent">
+                    <div class="text-start tab-pane fade show active" id="pill-all" role="tabpanel" aria-labelledby="pill-all-tab">
+                        <p id="productDescription" class="text-secondary"></p>
+                    </div>
                 </div>
+            </div>
+            <hr>
+            <div id="reviewContainer">
+
             </div>
         </div>
     </div>
@@ -41,11 +79,71 @@
                 "productid" : productid
             };
             prescoExecutePOST("api/ProductController/getProduct", payload ,function (product){ 
+                $("#star5").html(`(${product.response[0].stars[0]})`);
+                $("#star4").html(`(${product.response[0].stars[1]})`);
+                $("#star3").html(`(${product.response[0].stars[2]})`);
+                $("#star2").html(`(${product.response[0].stars[3]})`);
+                $("#star1").html(`(${product.response[0].stars[4]})`);
+                
                 let payload = {
                     "email" : Cookies.get('email'),
                     "productid" : product.response[0].product_id
                 };
-                console.log(product);
+                let rating = "";
+                if (product.response[0].rating != null) {
+                    for (let index = 0; index < Math.floor(product.response[0].rating); index++) {
+                        rating += `<i class="bi bi-star-fill text-primary"></i>`
+                    }
+                    for (let index = Math.floor(product.response[0].rating); index < 5; index++) {
+                        rating += product.response[0].rating % 1 >= 0.5 && index == Math.floor(product.response[0].rating) ? `<i class="bi bi-star-half text-primary"></i>` : `<i class="bi bi-star text-primary"></i>`
+                    }
+                    
+
+                    $("#ratingsAve").html(parseFloat(product.response[0].rating).toFixed(1));
+                }else {
+                    $("#ratingsAve").html(0);
+                    rating = `<i class="bi bi-star text-primary"></i>
+                    <i class="bi bi-star text-primary"></i>
+                    <i class="bi bi-star text-primary"></i>
+                    <i class="bi bi-star text-primary"></i>
+                    <i class="bi bi-star text-primary"></i>`;
+                }
+
+                if (product.response[0].feedback != null) {
+                    product.response[0].feedback.forEach(feedback => {
+                        let feedbackRating = "";
+                        if (feedback.rating != null) {
+                            for (let index = 0; index < Math.floor(feedback.rating); index++) {
+                                feedbackRating += `<i class="bi bi-star-fill text-primary"></i>`
+                            }
+                            for (let index = Math.floor(feedback.rating); index < 5; index++) {
+                                feedbackRating += feedback.rating % 1 >= 0.5 && index == Math.floor(feedback.rating) ? `<i class="bi bi-star-half text-primary"></i>` : `<i class="bi bi-star text-primary"></i>`
+                            }
+                        }else {
+                            feedbackRating = `<i class="bi bi-star text-primary"></i>
+                            <i class="bi bi-star text-primary"></i>
+                            <i class="bi bi-star text-primary"></i>
+                            <i class="bi bi-star text-primary"></i>
+                            <i class="bi bi-star text-primary"></i>`;
+                        }
+                        $("#reviewContainer").append(`
+                        <div class="reviews d-flex flex-column">
+                            <div class="stars">
+                                ${feedbackRating}
+                            </div>
+                            <p class="text-primary">By: ${feedback.first_name} <sup>${feedback.feedback_created_date}</sup></p>
+                            <p class="text-secondary">${feedback.message == "" ? "" : feedback.message}</p>
+                        </div>
+                        <hr>
+                        `);
+                    });
+                }else{
+                    $("#reviewContainer").html(`
+                        <p class="text-secondary text-center">No ratings yet</p>
+                    `);
+                }
+
+                $("#ratings").html(rating);
                 $("#productImg").attr("src", product.response[0].image);
                 $("#productName").html(product.response[0].product_name);
                 $("#productPrice").html("&#8369; " + product.response[0].price);
@@ -287,6 +385,62 @@
                 }
 
             });
+
+            var btnReview = document.querySelector('button[id="pills-review-tab"]')
+            btnReview.addEventListener('shown.bs.tab', function (event) {
+                $(".btnFilterStar").unbind("click").on("click", function(e){
+                    
+                    const rating = $(e.target).attr("star-rating");
+
+                    const payload = {
+                        "rating" : rating,
+                        "productid" : productid
+                    };
+
+                    prescoExecutePOST("api/ReviewController/filterRating", payload, function(product){
+                        $("#reviewContainer").html("");
+                        if (product.response[0].feedback != null) {
+                            product.response[0].feedback.forEach(feedback => {
+                                $("#reviewContainer").html("");
+                                if (product.response[0].feedback != null) {
+                                    product.response[0].feedback.forEach(feedback => {
+                                        let feedbackRating = "";
+                                        if (feedback.rating != null) {
+                                            for (let index = 0; index < Math.floor(feedback.rating); index++) {
+                                                feedbackRating += `<i class="bi bi-star-fill text-primary"></i>`
+                                            }
+                                            for (let index = Math.floor(feedback.rating); index < 5; index++) {
+                                                feedbackRating += feedback.rating % 1 >= 0.5 && index == Math.floor(feedback.rating) ? `<i class="bi bi-star-half text-primary"></i>` : `<i class="bi bi-star text-primary"></i>`
+                                            }
+                                        }else {
+                                            feedbackRating = `<i class="bi bi-star text-primary"></i>
+                                            <i class="bi bi-star text-primary"></i>
+                                            <i class="bi bi-star text-primary"></i>
+                                            <i class="bi bi-star text-primary"></i>
+                                            <i class="bi bi-star text-primary"></i>`;
+                                        }
+                                        $("#reviewContainer").append(`
+                                        <div class="reviews d-flex flex-column">
+                                            <div class="stars">
+                                                ${feedbackRating}
+                                            </div>
+                                            <p class="text-primary">By: ${feedback.first_name} <sup>${feedback.feedback_created_date}</sup></p>
+                                            <p class="text-secondary">${feedback.message == "" ? "" : feedback.message}</p>
+                                        </div>
+                                        <hr>
+                                        `);
+                                    });
+                                }else{
+                                    $("#reviewContainer").html(`
+                                        <p class="text-secondary text-center">No ratings yet</p>
+                                    `);
+                                }
+                            })
+                        }
+                    });
+                  
+                });
+            })
         });   
     })
 </script>

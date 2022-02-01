@@ -128,6 +128,21 @@
             prescoExecuteGET("api/ProductController/getCategoryDetails", function (res) {
                 if (res.status == "Success") {
                     res.response.forEach(product => {
+                        let rating = "";
+                        if (product.rating != null) {
+                            for (let index = 0; index < Math.floor(product.rating); index++) {
+                                rating += `<i class="bi bi-star-fill text-primary"></i>`
+                            }
+                            for (let index = Math.floor(product.rating); index < 5; index++) {
+                                rating += product.rating % 1 >= 0.5 && index == Math.floor(product.rating) ? `<i class="bi bi-star-half text-primary"></i>` : `<i class="bi bi-star text-primary"></i>`
+                            }
+                        }else {
+                            rating = `<i class="bi bi-star text-primary"></i>
+                            <i class="bi bi-star text-primary"></i>
+                            <i class="bi bi-star text-primary"></i>
+                            <i class="bi bi-star text-primary"></i>
+                            <i class="bi bi-star text-primary"></i>`;
+                        }
                         $("#card-section").append(`
                             <div class="product-container-home product-container-shop" product-id="${product.product_id}">
                                 <div class="card mx-3 shadow-lg">
@@ -143,6 +158,9 @@
                                     <div class="card-body">
                                         <p class="card-title text-primary fw-bold">${product.product_name}</p>
                                         <input type="hidden" class="product-name" value="${product.product_name}"/>
+                                        <div class="ratings">
+                                            ${rating}
+                                        </div>
                                         <div class="product-description text-secondary">
                                             <p class="card-text">${product.description}</p>
                                         </div>

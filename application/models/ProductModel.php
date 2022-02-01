@@ -61,20 +61,81 @@ class ProductModel extends CI_Model{
     }
 
     public function getProduct($payload){
+        $products = [];
+
         if (isset($payload->featured)) {
             $result = $this->db->select("*")->from("product")->where("featured", $payload->featured)->get();
+         
+            foreach ($result->result() as $value) {
+            
+                $rating = $this->db->select_avg("rating")->from("feedback")->where("product_id", $value->product_id)->get();
+      
+                $value->rating = $rating->result()[0]->rating ? $rating->result()[0]->rating : null;
+                
+                $products[] = $value;
+            }
+            
         }else if(isset($payload->productid)){
             $result = $this->db->select("*")->from("product")->where("product_id", $payload->productid)->get();
+
+            foreach ($result->result() as $value) {
+            
+                $rating = $this->db->select_avg("rating")->from("feedback")->where("product_id", $value->product_id)->get();
+                $feedback = $this->db->select("*")->from("feedback")->join("transaction", "feedback.transaction_id = transaction.transaction_id")->join("user_info", "transaction.email = user_info.email")->where("feedback.product_id", $value->product_id)->get();
+
+                $this->db->where("feedback.product_id", $value->product_id)->where("feedback.rating", 1);
+                $this->db->from('feedback');
+                $star1 = $this->db->count_all_results();
+                
+                $this->db->where("feedback.product_id", $value->product_id)->where("feedback.rating", 2);
+                $this->db->from('feedback');
+                $star2 = $this->db->count_all_results();
+
+                $this->db->where("feedback.product_id", $value->product_id)->where("feedback.rating", 3);
+                $this->db->from('feedback');
+                $star3 = $this->db->count_all_results();
+
+                $this->db->where("feedback.product_id", $value->product_id)->where("feedback.rating", 4);
+                $this->db->from('feedback');
+                $star4 = $this->db->count_all_results();
+
+                $this->db->where("feedback.product_id", $value->product_id)->where("feedback.rating", 5);
+                $this->db->from('feedback');
+                $star5 = $this->db->count_all_results();
+
+
+                $stars = array(
+                    $star5,
+                    $star4,
+                    $star3,
+                    $star2,
+                    $star1,
+                );
+
+                $value->rating = $rating->result()[0]->rating ? $rating->result()[0]->rating : null;
+                $value->feedback = $feedback->result() ? $feedback->result()  : null;
+                $value->stars = $stars;
+
+                $products[] = $value;
+            }
         }else{
             $result = $this->db->select("*")->from("product")->get();
+
+            foreach ($result->result() as $value) {
+            
+                $rating = $this->db->select_avg("rating")->from("feedback")->where("product_id", $value->product_id)->get();
+      
+                $value->rating = $rating->result()[0]->rating ? $rating->result()[0]->rating : null;
+                
+                $products[] = $value;
+            }
         }
-        
         
         if ($result->num_rows() > 0) {
             $response = array(
                 "status" => "Success",
                 "message" => "Fetch Success",
-                "response" => $result->result()
+                "response" => $products
             );
 
             return json_encode($response);
@@ -244,20 +305,31 @@ class ProductModel extends CI_Model{
     }
 
     public function getCategoryDetails($payload){
+        $products = [];
+
         if (isset($payload)) {
             $result = $this->db->select("*")->from("product")->where('category_type', $payload->categoryType)->where('category_name', $payload->categoryName)->get();
             
+            foreach ($result->result() as $value) {
+            
+                $rating = $this->db->select_avg("rating")->from("feedback")->where("product_id", $value->product_id)->get();
+      
+                $value->rating = $rating->result()[0]->rating ? $rating->result()[0]->rating : null;
+                
+                $products[] = $value;
+            }
+
             if ($result->num_rows() > 0) {
                 $response = array(
                     "status" => "Success",
                     "message" => "Fetch Success",
-                    "response" => $result->result()
+                    "response" => $products
                 );
             }else {
                 $response = array(
                     "status" => "Failed",
                     "message" => "No Data",
-                    "response" => $result->result()
+                    "response" => $products
                 );
             }
             return json_encode($response);

@@ -3,7 +3,6 @@
 		<Title>Presco PH</Title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="https://bootswatch.com/5/flatly/bootstrap.min.css" />
-        <link rel="stylesheet" href="<?php echo base_url(); ?>public/all.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 		<link rel="stylesheet" href="<?php echo base_url();?>public/css/third_party/bootstrap-datepicker3.min.css">
         <link rel="stylesheet" href="<?php echo base_url();?>public/css/third_party/bootstrap-datepicker3.css.map">
@@ -20,6 +19,10 @@
         <script>var base_url = '<?php echo base_url() ?>';</script>
     </head>
 	<body>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css">
+    <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script>
+    <link rel="stylesheet" href="<?php echo base_url(); ?>public/all.css"> 
 		<nav class="navbar navbar-expand-lg shadow navbar-light bg-primary">
             <div class="container-fluid">
                 <form class="d-flex pt-3 w-100">
