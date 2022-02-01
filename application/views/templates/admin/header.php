@@ -3,10 +3,10 @@
 		<Title>Presco PH</Title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="https://bootswatch.com/5/flatly/bootstrap.min.css" />
-        <link rel="stylesheet" href="<?php echo base_url(); ?>public/all.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 		<link rel="stylesheet" href="<?php echo base_url();?>public/css/third_party/bootstrap-datepicker3.min.css">
         <link rel="stylesheet" href="<?php echo base_url();?>public/css/third_party/bootstrap-datepicker3.css.map">
+        
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous" ></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
         <script src="<?php echo base_url();?>public/js/third_party/js.cookie.min.js"></script>
@@ -17,7 +17,11 @@
         <script>var base_url = '<?php echo base_url() ?>';</script>
     </head>
 	<body>
-        <div class="container-fluid">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css">
+    <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script>
+    <link rel="stylesheet" href="<?php echo base_url(); ?>public/all.css"> 
+    <div class="container-fluid">
         <div class="row" id="admin-container">
             <div class="col-lg-12 p-3 shadow-sm">
                 <div class="d-flex justify-content-between">

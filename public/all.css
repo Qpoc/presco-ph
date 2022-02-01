@@ -348,3 +348,17 @@ canvas {
     -webkit-line-clamp: 2;
     text-overflow: ellipsis;
 }
+
+/* datatables */
+
+
+.page-link {
+    background-color: rgb(216, 223, 230) !important;
+    color: #272727 !important;
+    border: none;
+    margin: 3px;
+}
+ 
+.page-link:hover {
+    color: #6b6b6b !important;
+}
