@@ -8,19 +8,19 @@
                         <h6 class="text-secondary fw-bold">Personal Information</h6>
                     </div>
                     <div class="col-lg-12">
-                        <input type="text" id="firstName" class="form-control form-control-sm mt-3 presco-input registration-input" placeholder="First Name">
+                        <input type="text" id="firstName" class="auth-regis form-control form-control-sm mt-3 presco-input registration-input" placeholder="First Name">
                     </div>
                     <div class="col-lg-12">
-                        <input type="text" id="lastName" class="form-control form-control-sm mt-3 presco-input registration-input" placeholder="Last Name">
+                        <input type="text" id="lastName" class="auth-regis form-control form-control-sm mt-3 presco-input registration-input" placeholder="Last Name">
                     </div>
                     <div class="userinfo">
-                        <input id="addressField" class="form-control form-control-sm mt-3 presco-input registration-input" placeholder="Address" type='text' name='address' value='' required />
+                        <input id="addressField" class="auth-regis form-control form-control-sm mt-3 presco-input registration-input" placeholder="Address" type='text' name='address' value='' required />
                     </div>
                     <div class="col-lg-12">
-                        <input type="text" id="birthDate" class="form-control form-control-sm mt-3 presco-input registration-input" placeholder="Birth Date" readonly>
+                        <input type="text" id="birthDate" class="auth-regis form-control form-control-sm mt-3 presco-input registration-input" placeholder="Birth Date" readonly>
                     </div>
                     <div class="col-lg-12">
-                        <select name="" id="gender" class="form-select form-select-sm mt-3 presco-input-select registration-input">
+                        <select name="" id="gender" class="auth-down form-select form-select-sm mt-3 presco-input-select registration-input">
                             <option value="" selected disabled>Select Gender</option>
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
@@ -32,16 +32,16 @@
                         <h6 class="text-secondary fw-bold">Account Information</h6>
                     </div>
                     <div class="col-lg-12">
-                        <input type="text" id="username" class="form-control form-control-sm mt-3 presco-input registration-input" placeholder="Username">
+                        <input type="text" id="username" class="auth-regis form-control form-control-sm mt-3 presco-input registration-input" placeholder="Username">
                     </div>
                     <div class="col-lg-12">
-                        <input type="text" id="email" class="form-control form-control-sm mt-3 presco-input registration-input" placeholder="Email Address">
+                        <input type="text" id="email" class="auth-regis form-control form-control-sm mt-3 presco-input registration-input" placeholder="Email Address">
                     </div>
                     <div class="col-lg-12">
-                        <input type="text" id="contactNumber" class="form-control form-control-sm mt-3 presco-input registration-input" placeholder="Contact No.">
+                        <input type="text" id="contactNumber" class="auth-regis form-control form-control-sm mt-3 presco-input registration-input" placeholder="Contact No.">
                     </div>
                     <div class="col-lg-12">
-                        <input type="password" id="password" class="form-control form-control-sm mt-3 presco-input registration-input" placeholder="Password" autocomplete="on">
+                        <input type="password" id="password" class="auth-regis form-control form-control-sm mt-3 presco-input registration-input" placeholder="Password" autocomplete="on">
                     </div>
                 </div>
             </form>
