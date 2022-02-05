@@ -34,24 +34,39 @@ $(document).ready(function () {
     });
 
     $("#btnLogin").unbind("click").on("click", function (e) { 
-        const username = $("#loginUsername").val();
-        const password = $("#loginPassword").val();
-
-        const payload = {
-            "username" : username,
-            "password" : password
-        }
-
-        prescoExecutePOST("api/UserAuthController/verifyLogin",payload, function (response) { 
-            if (response.status == "Success") {
-                Cookies.set('email', username, { expires: 10 })
-                if (response.type == "admin") {
-                    window.location.replace(base_url + 'admin');
-                }else {
-                    window.location.replace(base_url);
-                }
+        var validate = true;
+        
+        $('.auth-form').each(function(e){
+            if ($(this).val().length == 0) {
+                $(this).addClass('border-danger');
+                validate = false;
+            }else{
+                $(this).removeClass('border-danger');
             }
         });
+
+        if(validate){
+            const username = $("#loginUsername").val();
+            const password = $("#loginPassword").val();
+
+            const payload = {
+                "username" : username,
+                "password" : password
+            }
+
+            prescoExecutePOST("api/UserAuthController/verifyLogin",payload, function (response) { 
+                if (response.status == "Success") {
+                    Cookies.set('email', username, { expires: 10 })
+                    if (response.type == "admin") {
+                        window.location.replace(base_url + 'admin');
+                    }else {
+                        window.location.replace(base_url);
+                    }
+                }else {
+                    $('#exampleModal').modal('show');
+                }
+            });
+        }
 
     });
 

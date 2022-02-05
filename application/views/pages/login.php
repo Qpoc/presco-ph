@@ -7,10 +7,10 @@
             <h5 class="text-secondary fw-bold">Login</h5>
             <form class="row">
                 <div class="col-lg-12">
-                    <input id="loginUsername" type="text" class="form-control form-control-sm mt-3" placeholder="Username/Email Address">
+                    <input id="loginUsername" type="text" class="auth-form form-control form-control-sm mt-3" placeholder="Username/Email Address">
                 </div>
                 <div class="col-lg-12">
-                    <input id="loginPassword" type="password" class="form-control form-control-sm mt-3" placeholder="Password" autocomplete="on">
+                    <input id="loginPassword" type="password" class="auth-form form-control form-control-sm mt-3" placeholder="Password" autocomplete="on">
                 </div>
             </form>
         </div>
@@ -24,4 +24,22 @@
             <small class="fst-italic"><a href="#" class="text-primary">Forgot Password?</a></small>
         </div>
     </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Incorrect</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Incorrect Credentials
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
 </div>
