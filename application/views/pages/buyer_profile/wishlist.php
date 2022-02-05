@@ -33,7 +33,7 @@
             if (wishlists.status == "Success") {
                 wishlists.response.forEach(wishlist => {
                     $("#wishlistTable").append(`
-                        <tr product-id="${wishlist.product_id}">
+                        <tr product-id="${wishlist.product_id}" price="${wishlist.price}">
                             <td class="d-flex flex-column align-items-center justify-content-center">
                                 <div class="wishlist-product-list-img" style="min-height: 64px; height: 64px; min-width: 64px; width: 64px;">
                                     <img src="${base_url + wishlist.image}" style="max-width: 100%; max-height: 100%;"/>
@@ -46,7 +46,25 @@
                         </tr>
                     `);
                 });
+                $(".btnAddtoCart").unbind('click').on('click', function(e){
+                    let productID = $(e.target).closest('tr').attr('product-id');
+                    let price = $(e.target).closest('tr').attr('price');
+
+                    var payload = {
+                        "email" : Cookies.get('email'),
+                        "productId": productID,
+                        "price": price,
+                        "quantity": 1
+                    }
+
+
+                    prescoExecutePOST("api/ProductController/addToCart", payload , function(res){
+                        console.log(res)
+                    })
+
+                })
             }
+
         });
     })
 </script>
