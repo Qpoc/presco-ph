@@ -14,6 +14,13 @@ class AdminController extends CI_Controller{
         echo $this->AdminModel->addCategory($payload, $payload_post);
     }
 
+    public function updateCategory(){
+        $payload = $_FILES;
+        $payload_post = $_POST;
+        
+        echo $this->AdminModel->updateCategory($payload, $payload_post);
+    }
+
     public function getCategory(){
         echo $this->AdminModel->getCategory();
     }
@@ -31,7 +38,24 @@ class AdminController extends CI_Controller{
         $payload = json_decode(file_get_contents("php://input"));
         echo $this->AdminModel->getTrackingInformation($payload);
     }
+
+    public function getMonthlySales(){
+        $payload = json_decode(file_get_contents("php://input"));
+        echo $this->AdminModel->getMonthlySales($payload);
+    }
     
+    public function getProductSales(){
+        echo $this->AdminModel->getProductSales();
+    }
+
+    public function getProductNoSales(){
+        echo $this->AdminModel->getProductNoSales();
+    }
+
+    public function banBuyer(){
+        $payload = json_decode(file_get_contents("php://input"));
+        echo $this->AdminModel->banBuyer($payload);
+    }
     
 }
 

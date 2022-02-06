@@ -5,19 +5,13 @@
                     <h3 class="text-primary fw-bold">Customer</h3>
                     <hr>
                 </div>
-                <div class="col-lg-12">
-                    <div class="d-flex justify-content-end button-product">
-                        <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#M_addCategory" >Add Customer</button>
-                    </div>
-                </div>
                 <div class="col-lg-12 shadow p-3">
-                    <table class="table table-responsive text-center">
+                    <table id="customerTable" class="table table-responsive text-center">
                         <thead class="text-secondary">
                             <tr>
                                 <th>Customer Name</th>
                                 <th>Address</th>
                                 <th>Email Address</th>
-                                <th>Date Registered</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -69,5 +63,71 @@
                 </div>
             </div>
         </div>
+        <div class="modal fade" id="M_banUser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-secondary">
+                    <div class="row gy-3">
+                        <p>Are you sure you want to proceed?</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal" id="btnCloseAgreeBan">No</button>
+                    <button type="button" class="btn btn-primary btn-sm" id="btnAgreeBan">Yes</button>
+                </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+<script>
+    $(document).ready(function(){
+        prescoExecuteGET('api/BuyerController/getBuyerList', function(res){
+            let data = [];
+            res.response.forEach(customer => {
+                console.log(customer);
+                data.push([
+                    customer.first_name + " " + customer.last_name,
+                    customer.address,
+                    customer.email,
+                    `<button email="${customer.email}" ban="${customer.ban}" data-bs-toggle="modal" data-bs-target="#M_banUser" class="btn btn-sm ${customer.ban == 0 ? "btn-danger" : "btn-success"} btn-ban">${customer.ban == 0 ? "Ban" : "Unban"}</button>`
+                ]);
+                console.log(customer);
+            })
+            $("#customerTable").DataTable({
+                data : data,
+                pageLength: 10
+            });
+
+            $(".btn-ban").unbind("click").on("click", function(e){
+                let isBan = $(e.target).attr("ban") == 0 ? 1 : 0;
+
+                $("#btnAgreeBan").attr("ban", isBan);
+                $("#btnAgreeBan").attr("email", $(e.target).attr("email"));
+
+                $("#btnAgreeBan").unbind("click").on("click", function(e){
+                    let payload = {
+                        "email" : $(e.target).attr("email"),
+                        "ban" : $(e.target).attr("ban")
+                    };
+                    prescoExecutePOST('api/AdminController/banBuyer', payload, function(res){
+                        if (res.status == "Success") {
+                            $("#toastAddToCart").html(toast("Success", "Successfully ban/unban user, please refresh the page."))
+                            $('.toast').toast('show');
+                        }else{
+                            $("#toastAddToCart").html(toast("Failed", "An error occurred."))
+                            $('.toast').toast('show');
+                        }
+
+                        $("#btnCloseAgreeBan").click();
+                    });
+                });
+
+            });
+        })
+    })
+</script>

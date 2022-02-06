@@ -25,8 +25,10 @@ class ProductController extends CI_Controller  {
 
     public function updateProduct(){
 
-        $payload = json_decode(file_get_contents("php://input"));
-        echo $this->ProductModel->updateProduct($payload);
+        $payload = $_FILES;
+        $payload_post = $_POST;
+        
+        echo $this->ProductModel->updateProduct($payload, $payload_post);
 
     }
 

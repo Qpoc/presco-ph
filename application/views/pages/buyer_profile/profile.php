@@ -48,7 +48,10 @@
       <div class="modal-body">
         <div class="row g-3">
             <div class="col-sm-12 col-lg-6">
-                <input type="text" class="form-control-sm form-control" placeholder= "Full Name">
+                <input type="text" class="form-control-sm form-control" placeholder= "First Name">
+            </div>
+            <div class="col-sm-12 col-lg-6">
+                <input type="text" class="form-control-sm form-control" placeholder= "Last Name">
             </div>
             <div class="col-sm-12 col-lg-6">
                 <input type="text" class="form-control-sm form-control" placeholder= "Email Address">

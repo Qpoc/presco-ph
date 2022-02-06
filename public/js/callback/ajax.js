@@ -9,6 +9,11 @@ function prescoExecutePOST(url, payload, callback) {
 				callback(data);
 			}
 		},
+		error: function (data){
+			if (typeof callback == "function") {
+				callback(data);
+			}
+		}
 	});
 }
 
@@ -26,6 +31,11 @@ function prescoExecuteFileUpload(url, payload, callback) {
 				callback(data);
 			}
 		},
+		error: function (data){
+			if (typeof callback == "function") {
+				callback(data);
+			}
+		}
 	});
 }
 
@@ -40,5 +50,10 @@ function prescoExecuteGET(url, callback) {
 				callback(data);
 			}
 		},
+		error: function (data){
+			if (typeof callback == "function") {
+				callback(data);
+			}
+		}
 	});
 }

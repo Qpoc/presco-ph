@@ -5,9 +5,9 @@
                     <h3 class="text-primary fw-bold">Wishlist</h3>
                     <hr>
                 </div>
-                <div class="col-lg-12">
+                <!-- <div class="col-lg-12">
                     <button class="btn btn-sm btn-primary">Add All to Cart</button>
-                </div>
+                </div> -->
                 <div class="col-lg-12 p-3 table-responsive">
                     <table class="table text-center">
                         <thead class="text-secondary">
@@ -33,7 +33,7 @@
             if (wishlists.status == "Success") {
                 wishlists.response.forEach(wishlist => {
                     $("#wishlistTable").append(`
-                        <tr product-id="${wishlist.product_id}" price="${wishlist.price}">
+                        <tr product-name="${wishlist.product_name}" product-id="${wishlist.product_id}" price="${wishlist.price}">
                             <td class="d-flex flex-column align-items-center justify-content-center">
                                 <div class="wishlist-product-list-img" style="min-height: 64px; height: 64px; min-width: 64px; width: 64px;">
                                     <img src="${base_url + wishlist.image}" style="max-width: 100%; max-height: 100%;"/>
@@ -49,6 +49,7 @@
                 $(".btnAddtoCart").unbind('click').on('click', function(e){
                     let productID = $(e.target).closest('tr').attr('product-id');
                     let price = $(e.target).closest('tr').attr('price');
+                    let productName = $(e.target).closest('tr').attr('product-name');
 
                     var payload = {
                         "email" : Cookies.get('email'),
@@ -57,9 +58,15 @@
                         "quantity": 1
                     }
 
-
                     prescoExecutePOST("api/ProductController/addToCart", payload , function(res){
-                        console.log(res)
+                        if (res.status == "Success") {
+                            $("#toastAddToCart").html(toast("Add to Cart", `${productName} has been added to your cart.`))
+                            $('.toast').toast('show');
+
+                            getCart({
+                                "email" : Cookies.get("email") ?? null
+                            })
+                        }
                     })
 
                 })

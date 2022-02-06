@@ -33,7 +33,7 @@
         </div>
     </div>
 </div>
-<div class="col-lg-12 d-flex flex-column justify-content-center align-items-center">
+<div class="col-lg-12 mt-3 d-flex flex-column justify-content-center align-items-center">
     <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
         <li class="nav-item" role="presentation">
             <button class="nav-link active" id="pills-description-tab" data-bs-toggle="pill" data-bs-target="#pills-description" type="button" role="tab" aria-controls="pills-description" aria-selected="true">Description</button>

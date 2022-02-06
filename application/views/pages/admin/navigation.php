@@ -67,7 +67,6 @@ echo '<input type="checkbox" id="presco-navigation" hidden>
                         <div class="accordion-body">
                             <ul>
                                 <li class="text-start"><a href="'.base_url().'admin/manage_category" class="dropdown-item">Manage Category</a></li>
-                                <li class="text-start"><a href="'.base_url().'admin/addProduct" class="dropdown-item">Import Category</a></li>
                             </ul>
                         </div>
                     </div>

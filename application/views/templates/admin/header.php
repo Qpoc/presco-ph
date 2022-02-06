@@ -11,6 +11,7 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
         <script src="<?php echo base_url();?>public/js/third_party/js.cookie.min.js"></script>
         <script src="<?php echo base_url();?>public/js/callback/ajax.js"></script>
+        <script src="<?php echo base_url();?>public/js/var.js"></script>
         <script src="<?php echo base_url();?>public/js/third_party/bootstrap-datepicker.min.js"></script>
         <script src="https://cdn.ckeditor.com/4.16.1/standard/ckeditor.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.0/dist/chart.min.js"></script>

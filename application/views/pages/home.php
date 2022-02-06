@@ -11,7 +11,7 @@
                 <img src="https://wallpaperaccess.com/download/4k-minimalist-21635" class="d-block w-100" alt="...">
                 <div class="carousel-caption d-none d-md-block">
                     <h5>Relaxing scents perfect for your home.</h5>
-                    <button class="btn btn-sm btn-primary" id="btnShopNow">SHOP NOW</button>
+                    <a href="shop" class="btn btn-sm btn-primary" id="btnShopNow">SHOP NOW</a>
                 </div>
             </div>
             <div class="carousel-item">

@@ -26,6 +26,23 @@
         </div>
     </div>
 </div>
+<div class="modal fade text-primary" id="cancelOrder" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to cancel your order?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="btnCloseAgreeCancel" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">No</button>
+        <button type="button" id="btnAgreeCancel" class="btn btn-primary btn-sm">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
 <script>
     $(document).ready(function () {
         prescoExecutePOST('api/TransactionController/getTracking', {
@@ -70,7 +87,7 @@
                         productColumn += `<li class="d-flex align-items-center" style="max-width: 300px"><div class="order-product-list-img"><img src="${base_url + product.product_image}"/></div><p class="mx-3 order-product-list-name">${product.product_name} x ${product.quantity}</p></li>`;
                     });
 
-                    status = info.status == "1" ? "Pending" : info.status == "2" ? "Awaiting Shipment" : info.status == "3" ? "Awaiting Pickup" : info.status == "4" ? "Shipped" : info.status == "5" ? "Completed" : "Cancelled"
+                    status = info.status == "1" ? `<button tracking-id="${info.trackingid}" class="btn btn-danger btn-sm btnCancel" data-bs-target="#cancelOrder" data-bs-toggle="modal">Cancel</button>` : info.status == "2" ? "Awaiting Shipment" : info.status == "3" ? "Awaiting Pickup" : info.status == "4" ? "Shipped" : info.status == "5" ? "Completed" : "Cancelled"
 
                     $("#trackingTable").append(`
                         <tr class="text-primary">
@@ -93,6 +110,30 @@
             }else {
                 $("#table-container").html(`<h4 class="text-primary">Your order will appear here.</h4>`);
             }
+
+            $(".btnCancel").unbind("click").on("click", function(e){
+                $("#btnAgreeCancel").attr('tracking-id', $(e.target).attr('tracking-id'));
+
+                $("#btnAgreeCancel").unbind("click").on("click", function(e){
+                    const trackingID = $("#btnAgreeCancel").attr('tracking-id');
+                    
+                    const payload = {
+                        "tracking_id" : trackingID
+                    }
+
+                    prescoExecutePOST("api/BuyerController/cancelOrder", payload, function(res){
+                        if (res.status == "Success") {
+                            $("#toastAddToCart").html(toast("Success", res.message))
+                            $('.toast').toast('show');
+                        }else {
+                            $("#toastAddToCart").html(toast("Failed", "An error occurred while cancelling your order, please refresh the page."))
+                            $('.toast').toast('show');
+                        }
+
+                        $("#btnCloseAgreeCancel").click();
+                    });
+                });
+            });
         });
     });
 </script>

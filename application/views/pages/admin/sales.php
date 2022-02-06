@@ -11,49 +11,36 @@
                             <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Product with Sales</button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Product with No Sales</button>
+                            <button class="nav-link" id="pills-no-sales-tab" data-bs-toggle="pill" data-bs-target="#pills-no-sales" type="button" role="tab" aria-controls="pills-no-sales" aria-selected="false">Product with No Sales</button>
                         </li>
                     </ul>
                 </div>
                 <div class="tab-content" id="pills-tabContent">
                     <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
                         <div class="col-lg-12 p-3 table-responsive">
-                            <table class="table text-center">
+                            <table id="withSalesTable" class="table text-center">
                                 <thead class="text-secondary">
                                     <tr>
                                         <th>Product Name</th>
                                         <th>Number of Sales</th>
-                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>Sweet Pea</td>
-                                        <td>10</td>
-                                        <td>
-                                            <button class="btn btn-sm btn-primary">Manage</button>
-                                        </td>
-                                    </tr>
+
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                    <div class="tab-pane fade" id="pills-no-sales" role="tabpanel" aria-labelledby="pills-no-sales-tab">
                         <div class="col-lg-12 p-3 table-responsive">
-                            <table class="table text-center">
+                            <table id="withNoSalesTable" class="table text-center">
                                 <thead class="text-secondary">
                                     <tr>
                                         <th>Product Name</th>
-                                        <th>Action</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Sweet Pea</td>
-                                        <td>
-                                            <button class="btn btn-sm btn-primary">Manage</button>
-                                        </td>
-                                    </tr>
+                                <tbody id="withNoSalesTableBody">
+
                                 </tbody>
                             </table>
                         </div>
@@ -63,3 +50,62 @@
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function(){
+        showProductWithSales();
+        
+        const productWithSales = document.getElementById('pills-home-tab');
+        const productWithNoSales = document.getElementById('pills-no-sales-tab');
+        
+        productWithSales.addEventListener('show.bs.tab', function(e){
+           showProductWithSales();
+        })
+
+        productWithNoSales.addEventListener('show.bs.tab', function(e){
+            prescoExecuteGET('api/AdminController/getProductNoSales', function(res){
+                if (res.response instanceof Array) {
+                    let data = [];
+
+                    res.response.forEach(product => {
+                        $("#withNoSalesTableBody").append(`
+                            <tr>
+                                <td>${product.product_name}</td>
+                            </tr>
+                        `);
+                    });
+                }
+            });
+        })
+
+        function showProductWithSales() { 
+            prescoExecuteGET('api/AdminController/getProductSales', function(res){
+                console.log(res);
+                if (res.response instanceof Array) {
+                    let products = new Map();
+                    let data = [];
+
+                    res.response.forEach(product => {
+                        products.has(product.product_name) ? products.set(product.product_name, products.get(product.product_name) + 1) : products.set(product.product_name, 1);
+                    });
+
+
+                    for (const iterator of products.keys()) {
+                        data.push([
+                            iterator,
+                            products.get(iterator)
+                        ]);
+                    }
+
+                    if (!$.fn.dataTable.isDataTable( '#withSalesTable' )) {
+                        $("#withSalesTable").DataTable({
+                            data: data,
+                            pageLength: 10
+                        });
+                    }else {
+                        $("#withSalesTable").DataTable();
+                    }
+                }
+            });
+        }
+    })
+</script>

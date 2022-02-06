@@ -7,8 +7,6 @@ $(document).ready(function () {
     $("#btnRegister").unbind("click").on("click", function (e) { 
         var approval = true; 
 
-        
-
         $('.auth-regis').each(function(e){
             if ($(this).val().length == 0) {
                 $(this).addClass('border-danger');
@@ -51,8 +49,14 @@ $(document).ready(function () {
                 "address" : address
             }
             
-            prescoExecutePOST("api/UserAuthController/registerUser", payload, function (response) {
-                console.log(response);
+            prescoExecutePOST("api/UserAuthController/registerUser", payload, function (res) {
+                if (res.status == "Success") {
+                    $("#toastAddToCart").html(toast("Success", "You successfully registered an account."))
+                    $('.toast').toast('show');
+                }else{
+                    $("#toastAddToCart").html(toast("Failed", "Email/Username already taken."))
+                    $('.toast').toast('show');
+                }
             })
 
         }
@@ -89,7 +93,8 @@ $(document).ready(function () {
                         window.location.replace(base_url);
                     }
                 }else {
-                    $('#exampleModal').modal('show');
+                    $("#toastAddToCart").html(toast("Failed", "You are either not registered or ban."))
+                    $('.toast').toast('show');
                 }
             });
         }

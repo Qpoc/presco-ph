@@ -224,38 +224,88 @@ class ProductModel extends CI_Model{
         
     }
 
-    public function updateProduct($payload){
-        if (isset($payload)) {
+    public function updateProduct($payload, $payload_post){
+        if (isset($payload['imagePath'])) {
+            $img_name = $payload['imagePath']['name'];
+            $extension = explode('.', $img_name);
+            $act_extension = strtolower(end($extension));
+            $allowed_ext = array("jpeg", "jpg", "png");
+            $tmp_name = $payload['imagePath']['tmp_name'];
+            $error = $payload['imagePath']['error'];
+            $size = $payload['imagePath']['size'];
+
+            if (isset($payload) AND $error == 0 AND in_array($act_extension, $allowed_ext) AND $size <= 2000000) {
+
+                $image_name_new = uniqid('') . '.' . $act_extension;
+                $db_img_path = "uploads/products/" . $image_name_new;
+
+                $config['upload_path'] = 'uploads/products/';
+                $config['file_name'] = $image_name_new;
+                $config['allowed_types'] = 'jpeg|jpg|png';
+                $config['max_size'] = 2000000;
+
+                $this->load->library('upload', $config);
+
+                if(!$this->upload->do_upload('imagePath')){
+                    echo($this->upload->display_errors());//validation error will be printed
+                }
+
+                $result = $this->db->select("image")->from("product")->where("product_id", $payload_post["product_id"])->get();
+
+                unlink($result->result()[0]->image);
+
+                $product = array(
+                    "product_name" => $payload_post['productName'],
+                    "image" => $db_img_path,
+                    "price" => $payload_post['price'],
+                    "stocks" => $payload_post['stocks'],
+                    "description" => $payload_post['description'],
+                    "email" => $payload_post['email'],
+                    "category_type" =>$payload_post['category_type'],
+                    "category_name" =>$payload_post['category_name'],
+                    "featured" =>$payload_post['featured']
+                );
+    
+                $this->db->set($product);
+                $this->db->where('product_id', $payload_post['product_id']);
+                $this->db->update('product'); 
+    
+                $response = array(
+                    "status" => "Success",
+                    "message" => "Product Created"
+                );
+    
+                return json_encode($response);
+            }
+        }else{  
             $product = array(
-                "product_name" => $payload->productName,
-                "image" => $payload->imagePath,
-                "price" => $payload->price,
-                "stocks" => $payload->stocks,
-                "description" => $payload->description,
-                "email" => $payload->email,
-                "modified_date" => $payload->modifiedDate,
-                "category" => $payload-> category,
-                "featured" => $payload-> featured
+                "product_name" => $payload_post['productName'],
+                "price" => $payload_post['price'],
+                "stocks" => $payload_post['stocks'],
+                "description" => $payload_post['description'],
+                "email" => $payload_post['email'],
+                "category_type" =>$payload_post['category_type'],
+                "category_name" =>$payload_post['category_name'],
+                "featured" =>$payload_post['featured']
             );
 
             $this->db->set($product);
-            $this->db->where('product_id', $payload->productId);
+            $this->db->where('product_id', $payload_post['product_id']);
             $this->db->update('product'); 
 
             $response = array(
                 "status" => "Success",
-                "message" => "Product Updated"
-            );
-
-            return json_encode($response);
-        }else {
-            $response = array(
-                "status" => "Failed",
-                "message" => "Missing payload"
+                "message" => "Product Created"
             );
 
             return json_encode($response);
         }
+        $response = array(
+            "status" => "Failed",
+            "message" => "Missing payload"
+        );
+
+        return json_encode($response);
     }
 
     public function loadShipping($productid){

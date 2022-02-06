@@ -5,31 +5,6 @@
                     <h3 class="text-primary fw-bold">Order</h3>
                     <hr>
                 </div>
-                <div class="col-lg-12 d-flex justify-content-end">
-                    <button class="btn btn-sm btn-primary">Add Order</button>
-                </div>
-                <div class="col-lg-12 shadow p-3">
-                    <div class="row gy-3">
-                        <div class="col-lg-3">
-                            <input type="text" class="form-control form-control-sm" placeholder="Order No.">
-                        </div>
-                        <div class="col-lg-3">
-                            <input type="text" class="form-control form-control-sm" placeholder="Customer First Name">
-                        </div>
-                        <div class="col-lg-3">
-                            <input type="text" class="form-control form-control-sm" placeholder="Customer Last Name">
-                        </div>
-                        <div class="col-lg-3">
-                            <select name="" id="" class="form-select form-select-sm">
-                                <option value="" disabled selected>Status</option>
-                                <option value="" >Shipped</option>
-                            </select>
-                        </div>
-                        <div class="col-lg-12 d-flex justify-content-end">
-                            <button class="btn btn-sm btn-primary">Search</button>
-                        </div>
-                    </div>
-                </div>
                 <div class="col-lg-12 shadow p-3">
                     <table id="orderTable" class="table table-responsive text-center">
                         <thead class="text-secondary">
@@ -86,10 +61,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary btn-sm" id="btnAddProduct">Save changes</button>
-                </div>
                 </div>
             </div>
         </div>
@@ -131,7 +102,8 @@
                 ])
             });
             $("#orderTable").DataTable({
-                data : data
+                data : data,
+                pageLength: 10
             });
 
             $(".btnDetails").unbind("click").on("click", function(e){
@@ -147,7 +119,7 @@
                     $("#detailsDate").html(`Date: ${res.response[0].created_date}`);
                     $("#detailsName").html(`Name: ${name}`);
                     $("#detailsMOP").html(`Mode of Payment: ${res.response[0].mode_payment == "1" ? "Cash on Delivery" : "Debit/Credit Card"}`);
-                    console.log(res.response);
+                    $("#detailsProductList").html(``);
                     res.response.forEach(product => {
                         $("#detailsProductList").append(`
                             <div class="row">
