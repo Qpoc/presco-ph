@@ -141,4 +141,61 @@ $(document).ready(function () {
         });
     }
 
+    let timer;
+    let tempSearch = null;
+
+    $("#searchProductHeader").unbind("input").on("input", function(e){
+        if ($(e.target).val() != tempSearch) {
+            clearTimeout(timer);
+        }
+
+        tempSearch = $(e.target).val();
+
+        if ($(e.target).val().trim().length != 0) {
+            timer = setTimeout(() => {
+                const payload = {
+                    "product_name" : tempSearch
+                }
+                $("#search-bar-content").html("").addClass("p-2");
+                prescoExecutePOST('api/BuyerController/searchProduct', payload, function(res){
+                    if (res.status == "Success") {
+                        res.response.forEach(product => {
+                            $("#search-bar-content").append(`
+                            <div product-id="${product.product_id}" class="search-bar-item d-flex align-items-center">
+                                <div class="search-bar-content-img">
+                                    <img src="${base_url + product.image}"/>
+                                </div>
+                                <div class="search-bar-content-body mx-3 d-flex flex-column">
+                                    <h5 class="text-primary">${product.product_name}</h5>
+                                    <p class="text-secondary">&#8369; ${product.price}</p>
+                                </div>
+                            </div>
+                            `);
+                        });
+                        $(".search-bar-item").unbind("click").on("click", function (e) {
+                            const btnDetails = $(e.target);
+                            const productID = btnDetails.attr("product-id");
+                            const payload = {
+                                "productid" : productID
+                            }
+                            prescoExecutePOST("api/ProductController/initProductDetails", payload, function (res) {
+                                
+                            });
+                    
+                            window.location.href = base_url + "viewProduct";
+                        });
+                    }else {
+                        $("#search-bar-content").html(`<h6 class="text-primary">No results found.</h6>`);
+                    }
+                });
+            }, 1500);
+        }else {
+            $("#search-bar-content").html("").removeClass('p-2');
+        }
+
+    });
+
+    $("#searchProductHeader").unbind("focusout").on("focusout", function (e) { 
+        $("#search-bar-content").html("").removeClass('p-2');
+    });
 });

@@ -111,4 +111,31 @@ class BuyerModel extends CI_Model{
             return json_encode($response);
         }
     }
+
+    public function searchProduct($payload){
+        if (isset($payload)) {
+            $result = $this->db->select("*")->from("product")->like("product_name",  $payload->product_name)->get();
+
+            if ($result->num_rows() > 0) {
+                $response = array(
+                    "status" => "Success",
+                    "message" => "Fetch Success",
+                    "response" => $result->result()
+                );
+            }else {
+                $response = array(
+                    "status" => "Failed",
+                    "message" => "No Data",
+                    "response" => $result->result()
+                );
+            }
+            return json_encode($response);
+        }else{
+            $response = array(
+                "status" => "Failed",
+                "message" => "Fetch Failed"
+            );
+            return json_encode($response);
+        }
+    }
 }

@@ -20,6 +20,11 @@ class BuyerController extends CI_Controller{
         $payload = json_decode(file_get_contents("php://input"));
         echo $this->BuyerModel->listCancel($payload);
     }
+
+    public function searchProduct(){
+        $payload = json_decode(file_get_contents("php://input"));
+        echo $this->BuyerModel->searchProduct($payload);
+    }
   
 }
 
