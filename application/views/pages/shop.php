@@ -10,7 +10,7 @@
                 res.response.forEach(element => {
                     $("#shopCategory").append(`
                     <div class="shop-category-img mx-3 my-3 rounded" category-type="${element.category_type}">
-                        <img src="${element.category_icon}" alt="">
+                        <img src="${base_url + element.category_icon}" alt="">
                         <div class="shop-category-content">
                             <div class="shop-category-title">
                                 <h1>${element.category_name}</h1>
