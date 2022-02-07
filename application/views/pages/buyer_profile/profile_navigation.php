@@ -1,11 +1,11 @@
 <?php 
-    echo '<div class="container-fluid">
+// <div class="profile-img-container">
+// <img src="https://scontent.fmnl2-1.fna.fbcdn.net/v/t1.6435-9/118211230_1223815944646768_8556277598618643273_n.jpg?_nc_cat=105&ccb=1-5&_nc_sid=09cbfe&_nc_eui2=AeHb5ydcdnFbKPyeSfJ6TUCWlFKCGmmGJhWUUoIaaYYmFVJSON2Ld-QnSrYMh8zJ6-uhHK1aXAwaVIcL8t7kQQ5t&_nc_ohc=waW2e24OrxoAX-0i_4N&_nc_oc=AQnOsYowu15EDUz5_tiSvhOoasQtzLvZL76zdjwSSlqX4GXJYmvzXCN9OkCUph32qPyvzPc_zljKmFoS3Fv-g42k&tn=gMGlgouJFaHG1iDU&_nc_ht=scontent.fmnl2-1.fna&oh=a80a815cc2a4906c59641b773263c7e4&oe=61AEB4FB" alt="">
+// </div>
+    echo '<div class="container-fluid" style="min-height: 500px; height:500px;">
     <div class="row p-3">
-        <div class="col-lg-3 p-3 shadow">
+        <div class="col-lg-3 p-3 shadow" style="min-height: 500px; height:500px;">
             <div class="profile-container d-flex align-items-center justify-content-center">
-                <div class="profile-img-container">
-                    <img src="https://scontent.fmnl2-1.fna.fbcdn.net/v/t1.6435-9/118211230_1223815944646768_8556277598618643273_n.jpg?_nc_cat=105&ccb=1-5&_nc_sid=09cbfe&_nc_eui2=AeHb5ydcdnFbKPyeSfJ6TUCWlFKCGmmGJhWUUoIaaYYmFVJSON2Ld-QnSrYMh8zJ6-uhHK1aXAwaVIcL8t7kQQ5t&_nc_ohc=waW2e24OrxoAX-0i_4N&_nc_oc=AQnOsYowu15EDUz5_tiSvhOoasQtzLvZL76zdjwSSlqX4GXJYmvzXCN9OkCUph32qPyvzPc_zljKmFoS3Fv-g42k&tn=gMGlgouJFaHG1iDU&_nc_ht=scontent.fmnl2-1.fna&oh=a80a815cc2a4906c59641b773263c7e4&oe=61AEB4FB" alt="">
-                </div>
                 <div class="profile-name mt-3 ms-3">
                     <p class="text-primary fw-bold">John Cyrus Patungan</p>
                 </div>

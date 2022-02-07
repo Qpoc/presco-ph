@@ -64,7 +64,15 @@ $(document).ready(function () {
                 $('.toast').toast('show');
 
                 $('#addProductForm').trigger("reset");
+            }else{
+                if (!res.file_size) {
+                    $("#toastAddToCart").html(toast("Failed", "Your uploaded file must not exceed 2mb."));
+                    $(".toast").toast("show");
+                }
             }
+
+            $("#btnAddProductClose").click();
+            
         });
     });
 
@@ -189,7 +197,14 @@ $(document).ready(function () {
                                     </div>
                                 `)
                                 $('.toast').toast('show');
+                            }else{
+                                if (!res.file_size) {
+                                    $("#toastAddToCart").html(toast("Failed", "Your uploaded file must not exceed 2mb."));
+                                    $(".toast").toast("show");
+                                }
                             }
+
+                            $("#btnAddProductEditClose").click();
                         });
                     });
                 }

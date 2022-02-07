@@ -48,6 +48,10 @@
                                 <input required id="category" type="text" class="form-control form-control-sm" placeholder="Category Name">
                             </div>
                             <div class="col-lg-6">
+                                <p>Category Text:</p>
+                                <input required id="categoryText" type="text" class="form-control form-control-sm" placeholder="Category Text">
+                            </div>
+                            <div class="col-lg-6">
                                 <p>Category Icon:</p>
                                 <input required id="categoryIcon" type="file" class="form-control form-control-sm">
                             </div>
@@ -82,6 +86,10 @@
                             <div class="col-lg-6">
                                 <p>Category:</p>
                                 <input required id="categoryEdit" type="text" class="form-control form-control-sm" placeholder="Category Name">
+                            </div>
+                            <div class="col-lg-6">
+                                <p>Category Text:</p>
+                                <input required id="categoryTextEdit" type="text" class="form-control form-control-sm" placeholder="Category Text">
                             </div>
                             <div class="col-lg-6">
                                 <p>Category Icon:</p>
@@ -170,6 +178,35 @@
                         </div>
                         <div class="toast-body text-secondary">
                             ${"Successfully edited, please refresh the page."} 
+                        </div>
+                        </div>
+                    `)
+                    $('.toast').toast('show');
+                }
+            });
+        });
+
+        $("#addCategoryForm").submit(function(e){
+            e.preventDefault();
+            var formData = new FormData();
+            
+            formData.append("category_type", $("#parentCategory").val());
+            formData.append("category_name", $("#category").val());
+            formData.append("category_text", $("#categoryText").val());
+            formData.append("category_icon", $("#categoryIcon")[0].files[0]);
+            formData.append("category_bg", $("#categoryBackground")[0].files[0]);
+
+            prescoExecuteFileUpload("api/AdminController/addCategory", formData, function (res){ 
+                if (res.status == "Success") {
+                    $("#toastAddToCart").html(`
+                        <div id="liveToast" class="toast bg-primary shadow-lg" role="alert" aria-live="assertive" aria-atomic="true" data-bs-animation="true">
+                        <div class="toast-header">
+                            <strong class="me-auto text-primary">Success</strong>
+                            <small>Now</small>
+                            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                        </div>
+                        <div class="toast-body text-secondary">
+                            ${"Successfully added, please refresh the page."} 
                         </div>
                         </div>
                     `)

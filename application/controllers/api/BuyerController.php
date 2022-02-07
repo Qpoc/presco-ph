@@ -25,6 +25,16 @@ class BuyerController extends CI_Controller{
         $payload = json_decode(file_get_contents("php://input"));
         echo $this->BuyerModel->searchProduct($payload);
     }
+
+    public function updateProfile(){
+        $payload = json_decode(file_get_contents("php://input"));
+        echo $this->BuyerModel->updateProfile($payload);
+    }
+
+    public function updateAddress(){
+        $payload = json_decode(file_get_contents("php://input"));
+        echo $this->BuyerModel->updateAddress($payload);
+    }
   
 }
 

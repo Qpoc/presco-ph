@@ -38,6 +38,7 @@ class AdminModel extends CI_Model{
         $category = array(
             "category_type" => $payload_post['category_type'],
             "category_name" => $payload_post['category_name'],
+            "message" => $payload_post['category_text'],
             "category_icon" => $db_img_path_icon,
             "category_bg" => $db_img_path_bg
         );

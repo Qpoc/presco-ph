@@ -52,7 +52,8 @@ class ProductModel extends CI_Model{
             }else {
                 $response = array(
                     "status" => "Failed",
-                    "message" => "Missing payload"
+                    "message" => "Missing payload",
+                    "file_size" => $size <= 2000000
                 );
     
                 return json_encode($response);
@@ -273,6 +274,14 @@ class ProductModel extends CI_Model{
                 $response = array(
                     "status" => "Success",
                     "message" => "Product Created"
+                );
+    
+                return json_encode($response);
+            }else {
+                $response = array(
+                    "status" => "Failed",
+                    "message" => "Missing payload",
+                    "file_size" => $size <= 2000000
                 );
     
                 return json_encode($response);

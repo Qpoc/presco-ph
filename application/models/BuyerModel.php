@@ -138,4 +138,85 @@ class BuyerModel extends CI_Model{
             return json_encode($response);
         }
     }
+
+    public function updateProfile($payload){
+        $this->db->trans_begin();
+
+        $profile = array(
+            "email" => $payload->email,
+            "first_name" => $payload->firstName,
+            "last_name" => $payload->lastName,
+            "contact_number" => $payload->number
+        );
+
+        $user_address = array(
+            "email" => $payload->email,
+        );
+
+        $this->db->set($profile);
+        $this->db->where("email", $payload->origEmail);
+
+        $this->db->update('user_info');
+
+        $this->db->set($user_address);
+        $this->db->where("email", $payload->origEmail);
+
+        $this->db->update('user_address');
+
+        $this->db->trans_complete();
+
+        if ($this->db->trans_status() === FALSE){
+            $this->db->trans_rollback();
+        }else{
+            $this->db->trans_commit();
+            $response = array(
+                "status" => "Success",
+                "message" => "Update successfully"
+            );
+
+            return json_encode($response);
+        }
+        
+
+        $response = array(
+            "status" => "Failed",
+            "message" => "An error occurred"
+        );
+    
+        return json_encode($response);
+    }
+
+    public function updateAddress($payload){
+        $this->db->trans_begin();
+
+        $user_address = array(
+            "address" => $payload->address,
+        );
+
+        $this->db->set($user_address);
+        $this->db->where("email", $payload->email);
+
+        $this->db->update('user_address');
+
+        $this->db->trans_complete();
+
+        if ($this->db->trans_status() === FALSE){
+            $this->db->trans_rollback();
+        }else{
+            $this->db->trans_commit();
+            $response = array(
+                "status" => "Success",
+                "message" => "Update successfully"
+            );
+
+            return json_encode($response);
+        }
+        
+        $response = array(
+            "status" => "Failed",
+            "message" => "An error occurred"
+        );
+    
+        return json_encode($response);
+    }
 }

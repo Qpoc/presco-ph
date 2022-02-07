@@ -1,5 +1,5 @@
 <div class="col-lg-12 p-3">
-    <div class="d-flex align-items-start justify-content-start ms-5" id="card-section">
+    <div class="d-flex align-items-start justify-content-start ms-5" id="card-section" style="min-height: 407px; ">
         
     </div>
 </div>
@@ -308,6 +308,12 @@
 
                         window.location.href = base_url + "viewProduct";
                     });
+                }else{
+                    $("#card-section").removeClass('justify-content-start').addClass("justify-content-center").html(`
+                        <div class="d-flex justify-content-center">
+                            <h1 class="text-primary">Sorry, Product not available right now.</h1>
+                        </div>
+                    `);
                 }
             });
         }
