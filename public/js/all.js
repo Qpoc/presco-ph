@@ -194,8 +194,4 @@ $(document).ready(function () {
         }
 
     });
-
-    $("#searchProductHeader").unbind("focusout").on("focusout", function (e) { 
-        $("#search-bar-content").html("").removeClass('p-2');
-    });
 });
