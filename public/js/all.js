@@ -162,12 +162,12 @@ $(document).ready(function () {
                         res.response.forEach(product => {
                             $("#search-bar-content").append(`
                             <div product-id="${product.product_id}" class="search-bar-item d-flex align-items-center">
-                                <div class="search-bar-content-img">
-                                    <img src="${base_url + product.image}"/>
+                                <div class="search-bar-content-img pe-none">
+                                    <img src="${base_url + product.image}" class="pe-none"/>
                                 </div>
-                                <div class="search-bar-content-body mx-3 d-flex flex-column">
-                                    <h5 class="text-primary">${product.product_name}</h5>
-                                    <p class="text-secondary">&#8369; ${product.price}</p>
+                                <div class="pe-none search-bar-content-body mx-3 d-flex flex-column">
+                                    <h5 class="text-primary pe-none">${product.product_name}</h5>
+                                    <p class="text-secondary pe-none">&#8369; ${product.price}</p>
                                 </div>
                             </div>
                             `);
