@@ -57,22 +57,27 @@
         const productWithSales = document.getElementById('pills-home-tab');
         const productWithNoSales = document.getElementById('pills-no-sales-tab');
         
-        productWithSales.addEventListener('show.bs.tab', function(e){
+        productWithSales.addEventListener('shown.bs.tab', function(e){
            showProductWithSales();
         })
 
-        productWithNoSales.addEventListener('show.bs.tab', function(e){
+        productWithNoSales.addEventListener('shown.bs.tab', function(e){
             prescoExecuteGET('api/AdminController/getProductNoSales', function(res){
                 if (res.response instanceof Array) {
                     let data = [];
 
                     res.response.forEach(product => {
-                        $("#withNoSalesTableBody").append(`
-                            <tr>
-                                <td>${product.product_name}</td>
-                            </tr>
-                        `);
+                        data.push([
+                            product.product_name
+                        ])
+                        
                     });
+                    $("#withNoSalesTable").DataTable().clear().destroy();
+
+                    $("#withNoSalesTable").DataTable({
+                        data : data,
+                        pageLength : 5
+                    })
                 }
             });
         })
@@ -96,14 +101,12 @@
                         ]);
                     }
 
-                    if (!$.fn.dataTable.isDataTable( '#withSalesTable' )) {
-                        $("#withSalesTable").DataTable({
-                            data: data,
-                            pageLength: 10
-                        });
-                    }else {
-                        $("#withSalesTable").DataTable();
-                    }
+                    $("#withSalesTable").DataTable().clear().destroy();
+             
+                    $("#withSalesTable").DataTable({
+                        data: data,
+                        pageLength: 5
+                    });
                 }
             });
         }

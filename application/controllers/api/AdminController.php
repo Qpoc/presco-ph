@@ -29,6 +29,10 @@ class AdminController extends CI_Controller{
         echo $this->AdminModel->getTransactionStatus();
     }
 
+    public function getCompleteTransaction(){
+        echo $this->AdminModel->getCompleteTransaction();
+    }
+
     public function updateCustomerStatus(){
         $payload = json_decode(file_get_contents("php://input"));
         echo $this->AdminModel->updateCustomerStatus($payload);

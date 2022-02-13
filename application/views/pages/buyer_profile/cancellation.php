@@ -38,7 +38,7 @@
             })
             $("#cancellationTable").DataTable({
                 data : data,
-                pageLength : 10
+                pageLength : 5
             });
         });
     });

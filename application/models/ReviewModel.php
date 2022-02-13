@@ -92,4 +92,62 @@ class ReviewModel extends CI_Model{
 
         return json_encode($response);
     }
+
+    public function getHistoryReview($payload){
+        if (isset($payload)){
+          
+            $result = $this->db->select("*")->from("feedback")->join("transaction", "feedback.transaction_id = transaction.transaction_id")->join("transaction_product", "feedback.transaction_id = transaction_product.transaction_id")->join("product", "feedback.product_id = product.product_id")->where("transaction.email" , $payload->email)->where("transaction_product.reviewed", 1)->group_by("feedback.feedback_id")->get();
+
+            $response = array(
+                "status" => "Success",
+                "message" => "Fetch Successfully",
+                "response" => $result->result()
+            );
+
+            return json_encode($response);
+
+        }else {
+            $response = array(
+                "status" => "Failed",
+                "message" => "Missing payload"
+            );
+
+            return json_encode($response);
+        }
+    }
+
+    public function editReview($payload){
+        if (isset($payload)) {
+           
+            $this->db->trans_begin();
+
+            $review = array(
+                'message' => $payload->feedback,
+                'rating' => $payload->rating
+            );
+
+            $this->db->set($review);
+            $this->db->where('feedback_id',  $payload->feedback_id);
+            $this->db->update('feedback'); 
+
+            $response = array(
+                "status" => "Success",
+                "message" => "edit review Updated"
+            );
+
+            $this->db->trans_commit();
+
+            return json_encode($response);
+        }else {
+
+            $this->db->trans_rollback();
+
+            $response = array(
+                "status" => "Failed",
+                "message" => "Missing payload"
+            );
+
+            return json_encode($response);
+        }
+    }
 }

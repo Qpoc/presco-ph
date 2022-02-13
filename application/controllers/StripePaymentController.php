@@ -22,10 +22,10 @@ class StripePaymentController extends CI_Controller {
             \Stripe\Stripe::setApiKey($this->config->item('stripe_secret'));
         
             \Stripe\Charge::create ([
-                    "amount" => $this->input->post('total') * 100,
-                    "currency" => "php",
-                    "source" => $this->input->post('stripeToken'),
-                    "description" => "Dummy stripe payment." 
+                "amount" => $this->input->post('total') * 100,
+                "currency" => "php",
+                "source" => $this->input->post('stripeToken'),
+                "description" => "Presco PH payment." 
             ]);
         }
              

@@ -41,17 +41,19 @@
         prescoExecutePOST('api/AdminController/getMonthlySales', {
             "email" : Cookies.get('email')
         } ,function(res){
-
+            
             if (res.response instanceof Array) {
                 let months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
                 let chartData = new Map();
+                let datas = new Map([["January", 0], ["February", 0], ["March", 0], ["April", 0], ["May", 0], ["June", 0], ["July", 0], ["August", 0], ["September", 0], ["October", 0], ["November", 0], ["Devember", 0]]);
 
                 let arrIncome = [];
                 let labels = [];
 
                 if (res.chart_data instanceof Array) {
                     res.chart_data.forEach(chart_data => {
+
                         let date = new Date(chart_data.created_date);
                         let month = months[date.getMonth()]
                         
@@ -59,18 +61,20 @@
                     });
                 }
 
-                for (let index = 0; index < months.length; index++) {
-                    chartData.has(months[index]) || chartData.set(months[index], 0);
-                }
-
-                chartData.forEach(data => {
-                    arrIncome.push(data)
-                })
-
+                let date = new Date();
+                console.log(date.getMonth());
 
                 for (const iterator of chartData.keys()) {
+                    datas.has(iterator) && datas.set(iterator, datas.get(iterator) + chartData.get(iterator));
+                }
+
+                for (const iterator of datas.keys()) {
                     labels.push(iterator);
                 }
+
+                datas.forEach(data => {
+                    arrIncome.push(data)
+                })
 
                 let monthlyIncome = 0;
                 let dailyIncome = 0;
@@ -125,6 +129,10 @@
                         }
                     }
                 });
+            }else{
+                $("#monthlyIncome").html(0);
+                $("#salesToday").html(0);
+                $("#customers").html("N/A");
             }
         });
     });

@@ -8,21 +8,21 @@
         </div>
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img src="https://wallpaperaccess.com/download/4k-minimalist-21635" class="d-block w-100" alt="...">
+                <img src="<?php echo base_url();?>uploads/background/1.jpg" class="d-block w-100" alt="...">
                 <div class="carousel-caption d-none d-md-block">
                     <h5>Relaxing scents perfect for your home.</h5>
                     <a href="shop" class="btn btn-sm btn-primary" id="btnShopNow">SHOP NOW</a>
                 </div>
             </div>
             <div class="carousel-item">
-            <img src="https://wallpaperaccess.com/download/hd-desktop-81236" class="d-block w-100" alt="...">
+            <img src="<?php echo base_url();?>uploads/background/2.jpg" class="d-block w-100" alt="...">
             <div class="carousel-caption d-none d-md-block">
                 <h5>Second slide label</h5>
                 <p>Some representative placeholder content for the second slide.</p>
             </div>
             </div>
             <div class="carousel-item">
-            <img src="https://wallpaperaccess.com/download/tumblr-desktop-560838" class="d-block w-100" alt="...">
+            <img src="<?php echo base_url();?>uploads/background/3.jpg" class="d-block w-100" alt="...">
             <div class="carousel-caption d-none d-md-block">
                 <h5>Third slide label</h5>
                 <p>Some representative placeholder content for the third slide.</p>

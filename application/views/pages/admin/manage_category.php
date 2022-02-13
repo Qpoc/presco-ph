@@ -113,45 +113,7 @@
 </div>
 <script>
     $(document).ready(function(){
-        prescoExecuteGET('api/ProductController/getCategory', function(res){
-
-            let data = [];
-
-            res.response.forEach(category => {
-                data.push([
-                    category.category_type,
-                    category.category_name,
-                    `
-                        <div style"max-width: 32px; max-height: 32px;">
-                            <img src="${base_url + category.category_icon}" style="max-width: 100%; max-height: 100%;" />
-                        </div>
-                    `,
-                    `
-                        <div style"max-width: 32px; max-height: 32px;">
-                            <img src="${base_url + category.category_bg}" style="max-width: 100%; max-height: 100%;" />
-                        </div>
-                    `,
-                    category.created_date,
-                    `<button parent-category="${category.category_type}" category="${category.category_name}" data-bs-toggle="modal" data-bs-target="#M_editCategory" class="btn btn-sm btn-primary btnEditCategory">Edit</button>`
-                ])
-            });
-
-            $("#categoryTable").DataTable({
-                data : data
-            });
-
-            $(".btnEditCategory").unbind("click").on("click", function(e){
-                let parentCategory = $(e.target).attr("parent-category");
-                let category = $(e.target).attr("category");
-
-                $("#editCategoryForm").attr('parent-category', parentCategory);
-                $("#editCategoryForm").attr('category', category);
-
-                $("#parentCategoryEdit").val(parentCategory);
-                $("#categoryEdit").val(category);
-
-            });
-        });
+        
 
         $("#editCategoryForm").submit(function(e){
             e.preventDefault();
@@ -182,6 +144,7 @@
                         </div>
                     `)
                     $('.toast').toast('show');
+                    getCategory();
                 }
             });
         });
@@ -211,8 +174,54 @@
                         </div>
                     `)
                     $('.toast').toast('show');
+                    getCategory();
                 }
             });
         });
+
+        getCategory();
+
+        function getCategory() {
+            prescoExecuteGET('api/ProductController/getCategory', function(res){
+
+            let data = [];
+
+            res.response.forEach(category => {
+                data.push([
+                    category.category_type,
+                    category.category_name,
+                    `
+                        <div style"max-width: 32px; max-height: 32px;">
+                            <img src="${base_url + category.category_icon}" style="max-width: 100%; max-height: 100%;" />
+                        </div>
+                    `,
+                    `
+                        <div style"max-width: 32px; max-height: 32px;">
+                            <img src="${base_url + category.category_bg}" style="max-width: 100%; max-height: 100%;" />
+                        </div>
+                    `,
+                    category.created_date,
+                    `<button parent-category="${category.category_type}" category="${category.category_name}" data-bs-toggle="modal" data-bs-target="#M_editCategory" class="btn btn-sm btn-primary btnEditCategory">Edit</button>`
+                ])
+            });
+            $("#categoryTable").DataTable().clear().destroy();
+            $("#categoryTable").DataTable({
+                data : data,
+                pageLength: 5
+            });
+
+            $("#categoryTable").undelegate(".btnEditCategory","click").on("click", ".btnEditCategory", function(e){
+                let parentCategory = $(e.target).attr("parent-category");
+                let category = $(e.target).attr("category");
+
+                $("#editCategoryForm").attr('parent-category', parentCategory);
+                $("#editCategoryForm").attr('category', category);
+
+                $("#parentCategoryEdit").val(parentCategory);
+                $("#categoryEdit").val(category);
+
+            });
+            });
+        }
     });
 </script>

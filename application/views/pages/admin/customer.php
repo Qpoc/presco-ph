@@ -86,48 +86,55 @@
 </div>
 <script>
     $(document).ready(function(){
-        prescoExecuteGET('api/BuyerController/getBuyerList', function(res){
-            let data = [];
-            res.response.forEach(customer => {
-                console.log(customer);
-                data.push([
-                    customer.first_name + " " + customer.last_name,
-                    customer.address,
-                    customer.email,
-                    `<button email="${customer.email}" ban="${customer.ban}" data-bs-toggle="modal" data-bs-target="#M_banUser" class="btn btn-sm ${customer.ban == 0 ? "btn-danger" : "btn-success"} btn-ban">${customer.ban == 0 ? "Ban" : "Unban"}</button>`
-                ]);
-                console.log(customer);
-            })
-            $("#customerTable").DataTable({
-                data : data,
-                pageLength: 10
-            });
+        getBuyerList();
+        function getBuyerList() { 
+            prescoExecuteGET('api/BuyerController/getBuyerList', function(res){
+                let data = [];
+                res.response.forEach(customer => {
+                    console.log(customer);
+                    data.push([
+                        customer.first_name + " " + customer.last_name,
+                        customer.address,
+                        customer.email,
+                        `<button email="${customer.email}" ban="${customer.ban}" data-bs-toggle="modal" data-bs-target="#M_banUser" class="btn btn-sm ${customer.ban == 0 ? "btn-danger" : "btn-success"} btn-ban">${customer.ban == 0 ? "Ban" : "Unban"}</button>`
+                    ]);
+                    console.log(customer);
+                })
+                
+                $("#customerTable").DataTable().clear().destroy();
 
-            $(".btn-ban").unbind("click").on("click", function(e){
-                let isBan = $(e.target).attr("ban") == 0 ? 1 : 0;
-
-                $("#btnAgreeBan").attr("ban", isBan);
-                $("#btnAgreeBan").attr("email", $(e.target).attr("email"));
-
-                $("#btnAgreeBan").unbind("click").on("click", function(e){
-                    let payload = {
-                        "email" : $(e.target).attr("email"),
-                        "ban" : $(e.target).attr("ban")
-                    };
-                    prescoExecutePOST('api/AdminController/banBuyer', payload, function(res){
-                        if (res.status == "Success") {
-                            $("#toastAddToCart").html(toast("Success", "Successfully ban/unban user, please refresh the page."))
-                            $('.toast').toast('show');
-                        }else{
-                            $("#toastAddToCart").html(toast("Failed", "An error occurred."))
-                            $('.toast').toast('show');
-                        }
-
-                        $("#btnCloseAgreeBan").click();
-                    });
+                $("#customerTable").DataTable({
+                    data : data,
+                    pageLength: 5
                 });
 
-            });
-        })
+                $("#customerTable").undelegate(".btn-ban","click").on("click", ".btn-ban" ,function(e){
+                    let isBan = $(e.target).attr("ban") == 0 ? 1 : 0;
+
+                    $("#btnAgreeBan").attr("ban", isBan);
+                    $("#btnAgreeBan").attr("email", $(e.target).attr("email"));
+
+                    $("#btnAgreeBan").unbind("click").on("click", function(e){
+                        let payload = {
+                            "email" : $(e.target).attr("email"),
+                            "ban" : $(e.target).attr("ban")
+                        };
+                        prescoExecutePOST('api/AdminController/banBuyer', payload, function(res){
+                            if (res.status == "Success") {
+                                $("#toastAddToCart").html(toast("Success", "Successfully ban/unban user, please refresh the page."))
+                                $('.toast').toast('show');
+                            }else{
+                                $("#toastAddToCart").html(toast("Failed", "An error occurred."))
+                                $('.toast').toast('show');
+                            }
+
+                            $("#btnCloseAgreeBan").click();
+                            getBuyerList();
+                        });
+                    });
+
+                });
+            })
+        }
     })
 </script>

@@ -72,50 +72,54 @@
 </div>
 <script>
     $(document).ready(function () {
-        prescoExecutePOST('api/BuyerController/getBuyerInfo', {
-            "email" : Cookies.get("email")
-        }, function (res) {
-            if (res.status == "Success") {
-                $("#name").html(res.response[0].first_name + " " + res.response[0].last_name);
-                $("#email").html(res.response[0].email);
-                $("#birthdate").html(res.response[0].birthdate);
-                $("#address").html(res.response[0].address);
-                $("#gender").html(res.response[0].gender);
-                $("#mobileNo").html(res.response[0].contact_number);
+        getBuyerInfo();
+        function getBuyerInfo() {
+            prescoExecutePOST('api/BuyerController/getBuyerInfo', {
+                "email" : Cookies.get("email")
+            }, function (res) {
+                if (res.status == "Success") {
+                    $("#name").html(res.response[0].first_name + " " + res.response[0].last_name);
+                    $("#email").html(res.response[0].email);
+                    $("#birthdate").html(res.response[0].birthdate);
+                    $("#address").html(res.response[0].address);
+                    $("#gender").html(res.response[0].gender);
+                    $("#mobileNo").html(res.response[0].contact_number);
 
-                $("#firstNameEdit").val(res.response[0].first_name)
-                $("#lastNameEdit").val(res.response[0].last_name)
-                $("#emailAddEdit").val(res.response[0].email)
-                $("#numberEdit").val(res.response[0].contact_number)
+                    $("#firstNameEdit").val(res.response[0].first_name)
+                    $("#lastNameEdit").val(res.response[0].last_name)
+                    $("#emailAddEdit").val(res.response[0].email)
+                    $("#numberEdit").val(res.response[0].contact_number)
 
-                $("#editProfileForm").submit(function(e){
-                    e.preventDefault();
-                    let firstName = $("#firstNameEdit").val()
-                    let lastName = $("#lastNameEdit").val()
-                    let email = $("#emailAddEdit").val()
-                    let number = $("#numberEdit").val()
+                    $("#editProfileForm").submit(function(e){
+                        e.preventDefault();
+                        let firstName = $("#firstNameEdit").val()
+                        let lastName = $("#lastNameEdit").val()
+                        let email = $("#emailAddEdit").val()
+                        let number = $("#numberEdit").val()
 
-                    const payload = {
-                        "firstName" : firstName,
-                        "lastName" : lastName,
-                        "email" : email,
-                        "number" : number,
-                        "origEmail": res.response[0].email
-                    }
-
-                    prescoExecutePOST('api/BuyerController/updateProfile', payload, function(res){
-                        if (res.status == "Success") {
-                            $("#toastAddToCart").html(toast("Success", "You successfully updated your profile, please refresh the page."));
-                            $(".toast").toast('show');
-                            Cookies.set('email', email);
-                        }else{
-                            $("#toastAddToCart").html(toast("Failed", "An error occurred while updating your profile."));
-                            $(".toast").toast('show');
+                        const payload = {
+                            "firstName" : firstName,
+                            "lastName" : lastName,
+                            "email" : email,
+                            "number" : number,
+                            "origEmail": res.response[0].email
                         }
-                        $("#editProfileClose").click();
+
+                        prescoExecutePOST('api/BuyerController/updateProfile', payload, function(res){
+                            if (res.status == "Success") {
+                                $("#toastAddToCart").html(toast("Success", "You successfully updated your profile, please refresh the page."));
+                                $(".toast").toast('show');
+                                Cookies.set('email', email);
+                            }else{
+                                $("#toastAddToCart").html(toast("Failed", "An error occurred while updating your profile."));
+                                $(".toast").toast('show');
+                            }
+                            $("#editProfileClose").click();
+                            getBuyerInfo();
+                        });
                     });
-                });
-            }
-        })
+                }
+            })
+        }
     });
 </script>

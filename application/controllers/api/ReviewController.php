@@ -17,4 +17,15 @@ class ReviewController extends CI_Controller{
         echo $this->ReviewModel->filterRating($payload);
     }
 
+    public function getHistoryReview(){
+        $payload = json_decode(file_get_contents("php://input"));
+        echo $this->ReviewModel->getHistoryReview($payload);
+    }
+
+    public function editReview(){
+        $payload = json_decode(file_get_contents("php://input"));
+        echo $this->ReviewModel->editReview($payload);
+    }
+
+
 }

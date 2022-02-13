@@ -221,6 +221,27 @@ class AdminModel extends CI_Model{
         return json_encode($response);
     }
 
+    public function getCompleteTransaction(){
+        $result = $this->db->select("*")->from("tracking")->join("transaction", "tracking.transaction_id =  transaction.transaction_id")->join("transaction_product", "tracking.transaction_id = transaction_product.transaction_id")->join("product", "transaction_product.product_id = product.product_id")->join("user_info", "transaction.email = user_info.email")->join("user_address", "transaction.email = user_address.email")->where("tracking.status", "5")->or_where("tracking.status", "6")->group_by("tracking.tracking_id")->get();
+        
+        if ($result->num_rows() > 0) {
+            $response = array(
+                "status" => "Success",
+                "message" => "Fetch Success",
+                "response" => $result->result()
+            );
+
+            return json_encode($response);
+        }
+
+        $response = array(
+            "status" => "Failed",
+            "message" => "Fetch Failed"
+        );
+
+        return json_encode($response);
+    }
+
     public function updateCustomerStatus($payload){
         $data = array(
             'status' => $payload->status

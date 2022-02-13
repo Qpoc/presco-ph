@@ -72,8 +72,9 @@ $(document).ready(function () {
             }
 
             $("#btnAddProductClose").click();
-            
+            getProduct();
         });
+        
     });
 
     $("#addCategoryForm").submit(function(e){
@@ -92,124 +93,131 @@ $(document).ready(function () {
         });
     });
 
-    prescoExecuteGET('api/ProductController/getProduct', function(res){
-        console.log(res);
-        let data = [];
+    getProduct();
 
-        res.response.forEach(product => {
-            data.push([
-                `
-                    <div class="d-flex flex-column justify-content-center align-items-center">
-                        <div class="edit-image-product" style="max-height: 64px; max-width: 64px;">
-                            <img src="${base_url + product.image}" style="height: 100%; width: 100%;"/>
-                        </div>
-                        <p>${product.product_name}</p>
-                    </div>
-                `,
-                product.price,
-                product.stocks,
-                product.product_created_date,
-                `<button data-bs-toggle="modal" data-bs-target="#M_editCategory"  product-info="${product.product_id}" class="btnEditProduct btn btn-sm btn-primary">Edit</button>`
-            ]);
-        });
-
-        $("#productTable").DataTable({
-            data : data,
-            pageLength: 10
-        });
-
-        $(".btnEditProduct").unbind('click').on('click', function(e){
-            let productID = $(e.target).attr('product-info');
-            
-            let payload = {
-                "productid" : productID
-            }
-
-            prescoExecutePOST('api/ProductController/getProduct', payload, function(res){
-                if (res.status == "Success") {
-                    $("#categoryTypeEdit").html(`<option value="" disabled selected>Select Type</option>`);
-                    $("#categoryEdit").html(`<option value="" disabled selected>Select Category</option>`);
-
-                    prescoExecuteGET("api/AdminController/getCategory", function (res) {
-                        let category_type_map = new Map();
-                        let category_type = [];
-                        let category_name = [];
-                        res.response.forEach(category => {
-                            if (!category_type.includes(category.category_type)) {
-                                category_type.push(category.category_type)
-                                category_name.push(category.category_name)
-                                category_type_map.set(category.category_type, category_name)
-                            }else{
-                                let value = category_type_map.get(category.category_type);
-                                value.push(category.category_name);
-                                category_type_map.set(category.category_type, value)
-                            }
-                        }); 
-
-                        if (res.response.length > 0) {
-
-                            for (const key of category_type_map.keys()) {
-                                $("#categoryTypeEdit").append(`<option value="${key}">${key}</option>`)
-                            }
-                            $("#categoryTypeEdit").unbind("change").on("change", function(e) {
-                                category_type_map.get($("#categoryTypeEdit").val()).forEach(category => {
-                                    $("#categoryEdit").append(`<option value="${category}">${category}</option>`);
-                                })
-                            })
-                        }
-                    });
-                    res.response.forEach(product => {
-                        console.log(product);
-                        $("#productNameEdit").val(product.product_name)
-                        CKEDITOR.instances['productDescriptionEdit'].setData(product.description)
-                        $("#productPriceEdit").val(product.price);
-                        $("#productStockEdit").val(product.stocks);
-                        $("#featuredEdit").val(product.featured)
-                    });
-
-                    $("#editProductForm").submit(function(e){
-                        e.preventDefault();
-                        var formData = new FormData();
+    function getProduct() { 
+        prescoExecuteGET('api/ProductController/getProduct', function(res){
+            console.log(res);
+            let data = [];
     
-                        formData.append("product_id", productID);
-                        formData.append("productName", $("#productNameEdit").val());
-                        formData.append("imagePath", $("#productImageEdit")[0].files[0]);
-                        formData.append("price", $("#productPriceEdit").val());
-                        formData.append("stocks", $("#productStockEdit").val());
-                        formData.append("description", CKEDITOR.instances['productDescriptionEdit'].getData());
-                        formData.append("email", Cookies.get("email"));
-                        formData.append("category_type", $("#categoryTypeEdit").val())
-                        formData.append("category_name", $("#categoryEdit").val());
-                        formData.append("featured", $("#featuredEdit").val());
-
-                        prescoExecuteFileUpload("api/ProductController/updateProduct", formData, function (res) { 
-                            if (res.status == "Success") {
-                                $("#toastAddToCart").html(`
-                                    <div id="liveToast" class="toast bg-primary shadow-lg" role="alert" aria-live="assertive" aria-atomic="true" data-bs-animation="true">
-                                    <div class="toast-header">
-                                        <strong class="me-auto text-primary">Success</strong>
-                                        <small>Now</small>
-                                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-                                    </div>
-                                    <div class="toast-body text-secondary">
-                                        ${$("#productNameEdit").val() + " " + "successfully edited, please refresh the page."} 
-                                    </div>
-                                    </div>
-                                `)
-                                $('.toast').toast('show');
-                            }else{
-                                if (!res.file_size) {
-                                    $("#toastAddToCart").html(toast("Failed", "Your uploaded file must not exceed 2mb."));
-                                    $(".toast").toast("show");
-                                }
-                            }
-
-                            $("#btnAddProductEditClose").click();
-                        });
-                    });
+            res.response.forEach(product => {
+                data.push([
+                    `
+                        <div class="d-flex flex-column justify-content-center align-items-center">
+                            <div class="edit-image-product" style="max-height: 64px; max-width: 64px;">
+                                <img src="${base_url + product.image}" style="height: 100%; width: 100%;"/>
+                            </div>
+                            <p>${product.product_name}</p>
+                        </div>
+                    `,
+                    product.price,
+                    product.stocks,
+                    product.product_created_date,
+                    `<button data-bs-toggle="modal" data-bs-target="#M_editCategory"  product-info="${product.product_id}" class="btnEditProduct btn btn-sm btn-primary">Edit</button>`
+                ]);
+            });
+    
+            $("#productTable").DataTable().clear().destroy();
+            
+            $("#productTable").DataTable({
+                data : data,
+                pageLength: 5
+            });
+    
+            $("#productTable").undelegate(".btnEditProduct",'click').on('click', ".btnEditProduct" , function(e){
+                let productID = $(e.target).attr('product-info');
+                
+                let payload = {
+                    "productid" : productID
                 }
+    
+                prescoExecutePOST('api/ProductController/getProduct', payload, function(res){
+                    if (res.status == "Success") {
+                        $("#categoryTypeEdit").html(`<option value="" disabled selected>Select Type</option>`);
+                        $("#categoryEdit").html(`<option value="" disabled selected>Select Category</option>`);
+    
+                        prescoExecuteGET("api/AdminController/getCategory", function (res) {
+                            let category_type_map = new Map();
+                            let category_type = [];
+                            let category_name = [];
+                            res.response.forEach(category => {
+                                if (!category_type.includes(category.category_type)) {
+                                    category_type.push(category.category_type)
+                                    category_name.push(category.category_name)
+                                    category_type_map.set(category.category_type, category_name)
+                                }else{
+                                    let value = category_type_map.get(category.category_type);
+                                    value.push(category.category_name);
+                                    category_type_map.set(category.category_type, value)
+                                }
+                            }); 
+    
+                            if (res.response.length > 0) {
+    
+                                for (const key of category_type_map.keys()) {
+                                    $("#categoryTypeEdit").append(`<option value="${key}">${key}</option>`)
+                                }
+                                $("#categoryTypeEdit").unbind("change").on("change", function(e) {
+                                    category_type_map.get($("#categoryTypeEdit").val()).forEach(category => {
+                                        $("#categoryEdit").append(`<option value="${category}">${category}</option>`);
+                                    })
+                                })
+                            }
+                        });
+                        res.response.forEach(product => {
+                            console.log(product);
+                            $("#productNameEdit").val(product.product_name)
+                            CKEDITOR.instances['productDescriptionEdit'].setData(product.description)
+                            $("#productPriceEdit").val(product.price);
+                            $("#productStockEdit").val(product.stocks);
+                            $("#featuredEdit").val(product.featured)
+                        });
+    
+                        $("#editProductForm").submit(function(e){
+                            e.preventDefault();
+                            var formData = new FormData();
+        
+                            formData.append("product_id", productID);
+                            formData.append("productName", $("#productNameEdit").val());
+                            formData.append("imagePath", $("#productImageEdit")[0].files[0]);
+                            formData.append("price", $("#productPriceEdit").val());
+                            formData.append("stocks", $("#productStockEdit").val());
+                            formData.append("description", CKEDITOR.instances['productDescriptionEdit'].getData());
+                            formData.append("email", Cookies.get("email"));
+                            formData.append("category_type", $("#categoryTypeEdit").val())
+                            formData.append("category_name", $("#categoryEdit").val());
+                            formData.append("featured", $("#featuredEdit").val());
+    
+                            prescoExecuteFileUpload("api/ProductController/updateProduct", formData, function (res) { 
+                                if (res.status == "Success") {
+                                    $("#toastAddToCart").html(`
+                                        <div id="liveToast" class="toast bg-primary shadow-lg" role="alert" aria-live="assertive" aria-atomic="true" data-bs-animation="true">
+                                        <div class="toast-header">
+                                            <strong class="me-auto text-primary">Success</strong>
+                                            <small>Now</small>
+                                            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                                        </div>
+                                        <div class="toast-body text-secondary">
+                                            ${$("#productNameEdit").val() + " " + "successfully edited, please refresh the page."} 
+                                        </div>
+                                        </div>
+                                    `)
+                                    $('.toast').toast('show');
+                                }else{
+                                    if (!res.file_size) {
+                                        $("#toastAddToCart").html(toast("Failed", "Your uploaded file must not exceed 2mb."));
+                                        $(".toast").toast("show");
+                                    }
+                                }
+    
+                                $("#btnAddProductEditClose").click();
+                                getProduct();
+                            });
+                        });
+                    }
+                });
             });
         });
-    });
+    }
 
 });
