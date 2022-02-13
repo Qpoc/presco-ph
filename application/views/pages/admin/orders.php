@@ -116,7 +116,6 @@
         getTransactionStatus();
         function getTransactionStatus() { 
             let data = [];
-            $("#orderTable").DataTable().clear().destroy();
             prescoExecuteGET("api/AdminController/getTransactionStatus", function(res) {
                 if (res.status == "Success") {
                     let trackingID = "";

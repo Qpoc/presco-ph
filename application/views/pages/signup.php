@@ -35,7 +35,7 @@
                         <input type="text" id="username" class="auth-regis form-control form-control-sm mt-3 presco-input registration-input" placeholder="Username">
                     </div>
                     <div class="col-lg-12">
-                        <input type="text" id="email" class="auth-regis form-control form-control-sm mt-3 presco-input registration-input" placeholder="Email Address">
+                        <input type="email" id="email" class="auth-regis form-control form-control-sm mt-3 presco-input registration-input" placeholder="Email Address">
                     </div>
                     <div class="col-lg-12">
                         <input type="text" id="contactNumber" class="auth-regis form-control form-control-sm mt-3 presco-input registration-input" placeholder="Contact No.">

@@ -55,7 +55,7 @@
                             <input id="lastNameEdit" required type="text" class="form-control-sm form-control" placeholder= "Last Name">
                         </div>
                         <div class="col-sm-12 col-lg-6">
-                            <input id="emailAddEdit" required type="text" class="form-control-sm form-control" placeholder= "Email Address">
+                            <input id="emailAddEdit" required type="email" class="form-control-sm form-control" placeholder= "Email Address">
                         </div>
                         <div class="col-sm-12 col-lg-6">
                             <input id="numberEdit" required type="text" class="form-control-sm form-control" placeholder= "Mobile Number">
