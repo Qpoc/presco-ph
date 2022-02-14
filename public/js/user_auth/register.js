@@ -4,7 +4,10 @@ $(document).ready(function () {
         format: 'yyyy/mm/dd',
     });
 
-    $("#btnRegister").unbind("click").on("click", function (e) { 
+    $("#registerForm").submit(function(e){
+        e.preventDefault();
+        e.stopImmediatePropagation();
+     
         var approval = true; 
 
         $('.auth-regis').each(function(e){
@@ -60,8 +63,7 @@ $(document).ready(function () {
             })
 
         }
-
-    });
+    })
 
     $("#btnLogin").unbind("click").on("click", function (e) { 
         var validate = true;
