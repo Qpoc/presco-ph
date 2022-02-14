@@ -95,11 +95,23 @@ a {
 }
 
 .carousel-inner > .carousel-item {
-    height: 360px !important;
+    position: relative;
+    height: 500px !important;
 }
 
 .carousel-item > img {
-    height: 500px !important;
+    height: fit-content;
+    position: absolute;
+    top: -350px;
+}
+
+.carousel-caption {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
+    max-width: 500px;
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 .product-container-home .card-body .card-title {

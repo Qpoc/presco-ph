@@ -10,22 +10,23 @@
             <div class="carousel-item active">
                 <img src="<?php echo base_url();?>uploads/background/1.jpg" class="d-block w-100" alt="...">
                 <div class="carousel-caption d-none d-md-block">
-                    <h5>Relaxing scents perfect for your home.</h5>
+                    <h5>Brighten up the Nights</h5>
+                    <p>Be like a candle, give your warmth and light to others</p>
                     <a href="shop" class="btn btn-sm btn-primary" id="btnShopNow">SHOP NOW</a>
                 </div>
             </div>
             <div class="carousel-item">
             <img src="<?php echo base_url();?>uploads/background/2.jpg" class="d-block w-100" alt="...">
             <div class="carousel-caption d-none d-md-block">
-                <h5>Second slide label</h5>
-                <p>Some representative placeholder content for the second slide.</p>
+                <h5>A Delight to the Senses</h5>
+                <p>A bright idea for a bright future</p>
             </div>
             </div>
             <div class="carousel-item">
             <img src="<?php echo base_url();?>uploads/background/3.jpg" class="d-block w-100" alt="...">
             <div class="carousel-caption d-none d-md-block">
-                <h5>Third slide label</h5>
-                <p>Some representative placeholder content for the third slide.</p>
+                <h5>Light up your Moments</h5>
+                <p>Best-loved candles with best-loved designs</p>
             </div>
             </div>
         </div>
