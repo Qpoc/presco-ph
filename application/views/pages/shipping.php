@@ -69,12 +69,16 @@
                 "email" : Cookies.get("email")
             }, function(res){
                 res.response.forEach(info => {
+                    console.log(info);
                     $("#shipping-info").append(`
                         <div class="col-lg-12 mb-3">
                             <h5 class="fw-bold text-primary">Billing Information</h5>
                             <p class="text-primary">${info.first_name + " " + info.last_name}</p>
+                            <input type="hidden" name="first_name" value="${info.first_name}"/>
                             <p class="fw-bold text-primary">Location: <span class="fw-normal text-primary">${info.address}</span></p>
-                            <p class="fw-bold text-primary">Contact: <span class="fw-normal text-primary">09447485874</span></p>
+                            <input type="hidden" name="address" value="${info.address}"/>
+                            <p class="fw-bold text-primary">Contact: <span class="fw-normal text-primary">${info.contact_number}</span></p>
+                            <input type="hidden" name="contact_number" value="${info.contact_number}"/>
                             <p class="fw-bold text-primary">Email: <span class="fw-normal text-primary">${info.email}</span></p>
                             <input type="hidden" name="email" value="${Cookies.get('email')}"/>
                             <div>

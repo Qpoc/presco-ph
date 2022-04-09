@@ -7,7 +7,7 @@
             <h5 class="text-secondary fw-bold">Login</h5>
             <form class="row">
                 <div class="col-lg-12">
-                    <input id="loginUsername" type="text" class="auth-form form-control form-control-sm mt-3" placeholder="Username/Email Address">
+                    <input id="loginUsername" type="text" class="auth-form form-control form-control-sm mt-3" placeholder="Email Address">
                 </div>
                 <div class="col-lg-12">
                     <input id="loginPassword" type="password" class="auth-form form-control form-control-sm mt-3" placeholder="Password" autocomplete="on">
